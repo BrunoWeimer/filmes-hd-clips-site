@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin - Filmes HD Clips</title>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      color: #00aaff;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+    }
+    input {
+      background-color: #222;
+      color: #fff;
+    }
+    button {
+      background-color: #00aaff;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0077cc;
+    }
+    .filme-item {
+      margin-top: 10px;
+      background: #111;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .filme-item img {
+      max-width: 100px;
+      display: block;
+    }
+    .delete-btn {
+      background-color: #ff4444;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Painel Administrativo</h1>
+
+  <form id="form-filme">
+    <input type="text" id="titulo" placeholder="Título do filme" required>
+    <input type="text" id="imagem" placeholder="URL da imagem" required>
+    <button type="submit">Salvar Filme</button>
+  </form>
+
+  <hr>
+
+  <h2>Filmes cadastrados</h2>
+  <div id="filmes-lista"></div>
+
+  <script type="module" src="firebase.js"></script>
+  <script>
+    const db = firebase.firestore();
+    const form = document.getElementById("form-filme");
+    const lista = document.getElementById("filmes-lista");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const titulo = document.getElementById("titulo").value;
+      const imagem = document.getElementById("imagem").value;
+
+      await db.collection("filmes").add({ titulo, imagem });
+      form.reset();
+    });
+
+    function renderFilmes() {
+      db.collection("filmes").onSnapshot((snapshot) => {
+        lista.innerHTML = "";
+        snapshot.forEach((doc) => {
+          const filme = doc.data();
+          const div = document.createElement("div");
+          div.classList.add("filme-item");
+          div.innerHTML = `
+            <strong>${filme.titulo}</strong><br>
+            <img src="${filme.imagem}" alt="${filme.titulo}"><br>
+            <button class="delete-btn" onclick="deletarFilme('${doc.id}')">Excluir</button>
+          `;
+          lista.appendChild(div);
+        });
+      });
+    }
+
+    function deletarFilme(id) {
+      db.collection("filmes").doc(id).delete();
+    }
+
+    renderFilmes();
+  </script>
+</body>
+</html>
