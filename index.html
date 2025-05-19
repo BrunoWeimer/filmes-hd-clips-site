@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depoimentos - Filmes HD Clips | IPTV Premium</title>
+    <style>
+        :root {
+            --primary: #000000;  /* Preto (base) */
+            --secondary: #E50914; /* Vermelho Netflix-style (destaque) */
+            --accent: #FFFFFF;    /* Branco (textos) */
+            --gray: #2D2D2D;     /* Grafite (fundos) */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--primary);
+            color: var(--accent);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(to right, var(--primary), var(--gray));
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 3px solid var(--secondary);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.8em;
+            color: var(--secondary);
+            text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+        }
+        .subtitle {
+            color: var(--accent);
+            opacity: 0.9;
+            font-size: 1.2em;
+        }
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+        }
+        .testimonial-card {
+            background: var(--gray);
+            border-left: 4px solid var(--secondary);
+            border-radius: 5px;
+            width: 30%;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        .testimonial-card:hover {
+            transform: scale(1.03);
+        }
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .client-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--secondary);
+        }
+        .client-name {
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 0;
+        }
+        .client-location {
+            margin: 0;
+            color: #AAAAAA;
+        }
+        .rating {
+            color: #FFD700; /* Dourado para as estrelas */
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .testimonial-text {
+            color: #DDDDDD;
+            font-style: italic;
+        }
+        .cta-section {
+            background: var(--gray);
+            text-align: center;
+            padding: 50px 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 10px;
+            border-top: 3px solid var(--secondary);
+        }
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .cta-button:hover {
+            background: #B20710;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--gray);
+            color: var(--accent);
+            border-top: 1px solid var(--secondary);
+        }
+        .logo {
+            font-family: 'Impact', sans-serif;
+            font-size: 1.8em;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .testimonial-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">FILMES HD CLIPS</div>
+            <h1>O QUE NOSSOS CLIENTES DIZEM</h1>
+            <p class="subtitle">+5.000 assinantes satisfeitos com nossa qualidade HD</p>
+        </div>
+    </header>
+
+    <div class="testimonials">
+        <!-- Depoimento 1 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos" class="client-photo">
+                <div>
+                    <p class="client-name">Carlos Silva</p>
+                    <p class="client-location">São Paulo, SP</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"A melhor qualidade de imagem que já vi em um IPTV! Os filmes em 4K são impecáveis, e o catálogo atualiza toda semana. Vale cada centavo!"</p>
+        </div>
+
+        <!-- Depoimento 2 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana" class="client-photo">
+                <div>
+                    <p class="client-name">Ana Oliveira</p>
+                    <p class="client-location">Rio de Janeiro, RJ</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"Assino há 3 meses e nunca travou. Adoro a seção de clipes musicais em HD e os lançamentos de filmes. Atendimento 10/10!"</p>
+        </div>
+
+        <!-- Depoimento 3 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ricardo" class="client-photo">
+                <div>
+                    <p class="client-name">Ricardo Santos</p>
+                    <p class="client-location">Belo Horizonte, MG</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"Comparado a outros IPTVs, esse aqui é superior. O áudio 5.1 nos filmes faz toda diferença. Recomendo para cinéfilos!"</p>
+        </div>
+
+        <!-- Depoimento 4 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Fernanda" class="client-photo">
+                <div>
+                    <p class="client-name">Fernanda Costa</p>
+                    <p class="client-location">Porto Alegre, RS</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"Meus filhos amam os desenhos em HD, e eu aproveito os filmes premiados. O app é fácil de usar e nunca trava. Perfeito para família!"</p>
+        </div>
+
+        <!-- Depoimento 5 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/men/90.jpg" alt="José" class="client-photo">
+                <div>
+                    <p class="client-name">José Pereira</p>
+                    <p class="client-location">Salvador, BA</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"Contratei para ver jogos, mas fiquei pelos filmes em alta qualidade. A seção 'Clipes HD' é um diferencial incrível!"</p>
+        </div>
+
+        <!-- Depoimento 6 -->
+        <div class="testimonial-card">
+            <div class="client-info">
+                <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Mariana" class="client-photo">
+                <div>
+                    <p class="client-name">Mariana Alves</p>
+                    <p class="client-location">Brasília, DF</p>
+                </div>
+            </div>
+            <div class="rating">★★★★★</div>
+            <p class="testimonial-text">"Atendimento rápido e qualidade estável. Adoro assistir meus seriados favoritos sem lag. Melhor IPTV do mercado!"</p>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>ASSINE AGORA E TENHA ACESSO A:</h2>
+        <p>✅ +15.000 filmes e séries em HD/4K | ✅ Clipes musicais exclusivos | ✅ Suporte 24h</p>
+        <a href="#" class="cta-button">ASSINAR POR APENAS R$29,90/MÊS</a>
+    </div>
+
+    <footer>
+        <p>© 2025 FILMES HD CLIPS - Todos os direitos reservados</p>
+        <p style="font-size: 0.8em; opacity: 0.7;">Qualidade HD • Atendimento Personalizado • Garantia de 7 Dias</p>
+    </footer>
+</body>
+</html>
