@@ -555,7 +555,64 @@
                     <h3>Suporte 24/7</h3>
                     <p>Equipe especializada disponível a qualquer momento para te ajudar.</p>
                 </div>
-            </div>
+<div class="feature-card">
+    <div class="feature-icon">
+        <i class="fas fa-mobile-alt"></i>
+    </div>
+    <h3>Dispositivos Compatíveis</h3>
+    <div class="devices-grid">
+        <div class="device-item">
+            <i class="fab fa-android"></i>
+            <span>Android</span>
+        </div>
+        <div class="device-item">
+            <i class="fab fa-apple"></i>
+            <span>iOS</span>
+        </div>
+        <div class="device-item">
+            <i class="fas fa-tv"></i>
+            <span>Smart TVs</span>
+        </div>
+        <div class="device-item">
+            <i class="fas fa-laptop"></i>
+            <span>Computadores</span>
+        </div>
+    </div>
+</div>
+
+<!-- Estilo CSS para dispositivos -->
+<style>
+    .devices-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .device-item {
+        text-align: center;
+        padding: 10px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    
+    .device-item:hover {
+        transform: scale(1.05);
+        background: rgba(229, 9, 20, 0.1);
+    }
+    
+    .device-item i {
+        font-size: 1.5rem;
+        display: block;
+        margin-bottom: 5px;
+        color: var(--red);
+    }
+    
+    .device-item span {
+        font-size: 0.9rem;
+    }
+</style>
         </div>
     </section>
 
