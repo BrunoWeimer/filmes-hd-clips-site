@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filmes HD Clips | IPTV Premium 4K</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
     <style>
         :root {
             --black: #000000;
@@ -25,6 +26,7 @@
             background-color: var(--black);
             color: var(--white);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         /* Header */
@@ -113,6 +115,7 @@
             font-size: 1rem;
             transition: all 0.3s;
             border: 2px solid var(--red);
+            text-align: center;
         }
         
         .btn:hover {
@@ -174,15 +177,25 @@
         /* Catalog Section */
         .catalog {
             padding: 80px 0;
+            overflow: hidden;
+            position: relative;
         }
         
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+        .catalog-container {
+            display: flex;
+            width: calc(250px * 24);
+            animation: scroll 30s linear infinite;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 12)); }
         }
         
         .catalog-item {
+            width: 250px;
+            flex-shrink: 0;
+            margin-right: 20px;
             position: relative;
             border-radius: 6px;
             overflow: hidden;
@@ -217,6 +230,8 @@
             padding: 30px;
             border-radius: 8px;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         
         .pricing-card.popular {
@@ -257,6 +272,7 @@
         .pricing-features {
             list-style: none;
             margin: 25px 0;
+            flex-grow: 1;
         }
         
         .pricing-features li {
@@ -271,6 +287,11 @@
             position: absolute;
             left: 0;
             font-weight: bold;
+        }
+        
+        .pricing-btn {
+            margin-top: auto;
+            text-align: center;
         }
         
         /* Testimonials */
@@ -414,6 +435,10 @@
             .nav-links {
                 gap: 15px;
             }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -488,7 +513,53 @@
                 <h2>Nosso Catálogo</h2>
                 <p>Confira alguns dos títulos disponíveis em nossa plataforma</p>
             </div>
-            <div class="catalog-grid">
+            <div class="catalog-container">
+                <div class="catalog-item">
+                    <img src="images/breaking bad.png" alt="Breaking Bad">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/godzilla.png" alt="Godzilla">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/got.png" alt="Game of Thrones">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/meu malvado favorito.png" alt="Meu Malvado Favorito">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/peaky blinders.png" alt="Peaky Blinders">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/stranger things.png" alt="Stranger Things">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/the boys.png" alt="The Boys">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/vingadores.png" alt="Vingadores">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/cobra kai.png" alt="Cobra Kai">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/greys anatomy.png" alt="Grey's Anatomy">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/o mal que nos habita.png" alt="O Mal Que Nos Habita">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/sobrenatural.png" alt="Sobrenatural">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/spider man.png" alt="Homem-Aranha">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/velozes e furiosos.png" alt="Velozes e Furiosos">
+                </div>
+                <div class="catalog-item">
+                    <img src="images/vikings.png" alt="Vikings">
+                </div>
+                <!-- Duplicando para efeito infinito -->
                 <div class="catalog-item">
                     <img src="images/breaking bad.png" alt="Breaking Bad">
                 </div>
@@ -534,32 +605,38 @@
                         <li>7 dias de garantia</li>
                         <li>Suporte básico</li>
                     </ul>
-                    <a href="https://wa.me/5551986585514?text=Quero+o+plano+mensal+R$29,99" class="btn" target="_blank">Assinar</a>
+                    <div class="pricing-btn">
+                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+mensal+R$29,99" class="btn" target="_blank">Assinar</a>
+                    </div>
                 </div>
                 <div class="pricing-card popular">
                     <div class="popular-tag">Mais Popular</div>
                     <h3>Trimestral</h3>
                     <div class="price">R$69,99 <span>/3 meses</span></div>
                     <ul class="pricing-features">
-                        <li>2 dispositivos simultâneos</li>
+                        <li>1 dispositivo simultâneo</li>
                         <li>Qualidade 4K Ultra HD</li>
                         <li>15 dias de garantia</li>
                         <li>Suporte prioritário</li>
                         <li>Economize 22%</li>
                     </ul>
-                    <a href="https://wa.me/5551986585514?text=Quero+o+plano+trimestral+R$69,99" class="btn" target="_blank">Assinar</a>
+                    <div class="pricing-btn">
+                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+trimestral+R$69,99" class="btn" target="_blank">Assinar</a>
+                    </div>
                 </div>
                 <div class="pricing-card">
                     <h3>Anual</h3>
                     <div class="price">R$239,99 <span>/ano</span></div>
                     <ul class="pricing-features">
-                        <li>3 dispositivos simultâneos</li>
+                        <li>1 dispositivo simultâneo</li>
                         <li>Qualidade 4K HDR</li>
                         <li>30 dias de garantia</li>
                         <li>Suporte VIP 24/7</li>
                         <li>Economize 33%</li>
                     </ul>
-                    <a href="https://wa.me/5551986585514?text=Quero+o+plano+anual+R$239,99" class="btn" target="_blank">Assinar</a>
+                    <div class="pricing-btn">
+                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+anual+R$239,99" class="btn" target="_blank">Assinar</a>
+                    </div>
                 </div>
             </div>
         </div>
