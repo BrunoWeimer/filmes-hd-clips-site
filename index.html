@@ -122,7 +122,7 @@
             background-color: transparent;
         }
         
-        /* Features Section */
+        /* Features Section - AJUSTES PRINCIPAIS AQUI */
         .features {
             padding: 80px 0;
             background-color: var(--dark-gray);
@@ -147,18 +147,21 @@
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr); /* 4 colunas fixas */
+            gap: 20px; /* Reduzi o gap para caber melhor */
         }
         
         .feature-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 30px;
+            padding: 25px; /* Reduzi o padding */
             border-radius: 8px;
             text-align: center;
             transition: transform 0.3s;
             border: 1px solid #333;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            min-height: 280px; /* Altura fixa para uniformidade */
+            display: flex;
+            flex-direction: column;
         }
         
         .feature-card:hover {
@@ -167,16 +170,22 @@
         }
         
         .feature-icon {
-            font-size: 2.5rem;
+            font-size: 2rem; /* Reduzi o tamanho do ícone */
             color: var(--red);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.3rem;
             margin-bottom: 15px;
         }
         
+        .feature-card h3 {
+            font-size: 1.2rem; /* Reduzi o tamanho da fonte */
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            font-size: 0.9rem; /* Reduzi o tamanho da fonte */
+            flex-grow: 1; /* Para alinhar os botões */
+        }
+        
+        /* Restante do CSS permanece igual */
         /* Catalog Section */
         .catalog {
             padding: 80px 0;
@@ -484,6 +493,12 @@
         }
         
         /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablets */
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.2rem;
@@ -495,6 +510,10 @@
             
             .nav-links {
                 gap: 15px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr; /* 1 coluna em mobile */
             }
             
             .pricing-grid {
@@ -574,6 +593,7 @@
         </div>
     </section>
 
+    <!-- Restante do código permanece igual -->
     <!-- Catalog Section -->
     <section class="catalog" id="catalog">
         <div class="container">
