@@ -147,7 +147,7 @@
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         
@@ -175,46 +175,6 @@
         .feature-card h3 {
             font-size: 1.3rem;
             margin-bottom: 15px;
-        }
-        
-        .feature-description {
-            font-size: 0.95rem;
-            color: #aaa;
-            margin-bottom: 15px;
-        }
-        
-        .devices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .device-item {
-            text-align: center;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .device-item:hover {
-            transform: translateY(-3px);
-            background: rgba(229, 9, 20, 0.1);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .device-item i {
-            font-size: 1.8rem;
-            display: block;
-            margin-bottom: 8px;
-            color: var(--red);
-        }
-        
-        .device-item span {
-            font-size: 0.85rem;
-            display: block;
         }
         
         /* Catalog Section */
@@ -264,7 +224,7 @@
         
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
         
@@ -308,17 +268,25 @@
         
         .popular-tag {
             position: absolute;
-            top: -12px;
-            right: 20px;
-            background-color: var(--red);
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(to right, var(--red), #ff6b6b);
             color: var(--white);
-            padding: 5px 15px;
+            padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .pricing-card h3 {
@@ -532,14 +500,6 @@
             .pricing-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .devices-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -608,25 +568,7 @@
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3>Dispositivos Compatíveis</h3>
-                    <p class="feature-description">Assista em qualquer lugar, em todos seus dispositivos</p>
-                    <div class="devices-grid">
-                        <div class="device-item">
-                            <i class="fab fa-android"></i>
-                            <span>Android</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fab fa-apple"></i>
-                            <span>iOS</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fas fa-tv"></i>
-                            <span>Smart TVs</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fas fa-laptop"></i>
-                            <span>Computadores</span>
-                        </div>
-                    </div>
+                    <p>Assista em qualquer lugar, em todos seus dispositivos favoritos.</p>
                 </div>
             </div>
         </div>
@@ -735,12 +677,11 @@
                         <a href="https://wa.me/5551986585514?text=Quero+o+plano+mensal+R$29,99" class="btn" target="_blank">Assinar</a>
                     </div>
                 </div>
-                <div class="pricing-card popular">
-                    <div class="popular-tag">Mais Popular</div>
+                <div class="pricing-card">
                     <h3>Trimestral</h3>
                     <div class="price">R$69,99 <span>/3 meses</span></div>
                     <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
+                        <li>2 dispositivos simultâneos</li>
                         <li>Qualidade 4K Ultra HD</li>
                         <li>15 dias de garantia</li>
                         <li>Suporte prioritário</li>
@@ -750,15 +691,33 @@
                         <a href="https://wa.me/5551986585514?text=Quero+o+plano+trimestral+R$69,99" class="btn" target="_blank">Assinar</a>
                     </div>
                 </div>
+                <div class="pricing-card popular">
+                    <div class="popular-tag">Mais Popular</div>
+                    <h3>Semestral</h3>
+                    <div class="price">R$129,99 <span>/6 meses</span></div>
+                    <ul class="pricing-features">
+                        <li>3 dispositivos simultâneos</li>
+                        <li>Qualidade 4K Ultra HD</li>
+                        <li>30 dias de garantia</li>
+                        <li>Suporte VIP</li>
+                        <li>Economize 28%</li>
+                        <li>Canais adultos inclusos</li>
+                    </ul>
+                    <div class="pricing-btn">
+                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+semestral+R$129,99" class="btn" target="_blank">Assinar</a>
+                    </div>
+                </div>
                 <div class="pricing-card">
                     <h3>Anual</h3>
                     <div class="price">R$239,99 <span>/ano</span></div>
                     <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
+                        <li>5 dispositivos simultâneos</li>
                         <li>Qualidade 4K HDR</li>
-                        <li>30 dias de garantia</li>
+                        <li>60 dias de garantia</li>
                         <li>Suporte VIP 24/7</li>
                         <li>Economize 33%</li>
+                        <li>Canais adultos inclusos</li>
+                        <li>Conteúdo exclusivo</li>
                     </ul>
                     <div class="pricing-btn">
                         <a href="https://wa.me/5551986585514?text=Quero+o+plano+anual+R$239,99" class="btn" target="_blank">Assinar</a>
