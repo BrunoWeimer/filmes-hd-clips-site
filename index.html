@@ -1,848 +1,246 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmes HD Clips | IPTV Premium 4K</title>
-    <link rel="icon" href="images/logo.png" type="image/png">
-    <style>
-        :root {
-            --black: #000000;
-            --red: #E50914;
-            --white: #FFFFFF;
-            --dark-gray: #111111;
-            --medium-gray: #222222;
-            --light-gray: #333333;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', Arial, sans-serif;
-            background-color: var(--black);
-            color: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Header */
-        header {
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            border-bottom: 1px solid var(--red);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo img {
-            height: 40px;
-            width: auto;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-        
-        .nav-links a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: var(--red);
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/bannerhero.png') no-repeat center/cover;
-            padding: 100px 0 60px;
-            text-align: center;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero h1 span {
-            color: var(--red);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--red);
-            color: var(--white);
-            padding: 12px 30px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            border: 2px solid var(--red);
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background-color: transparent;
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background-color: var(--dark-gray);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #aaa;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s;
-            border: 1px solid #333;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--red);
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-        
-        .feature-description {
-            font-size: 0.95rem;
-            color: #aaa;
-            margin-bottom: 15px;
-        }
-        
-        .devices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .device-item {
-            text-align: center;
-            padding: 12px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .device-item:hover {
-            transform: translateY(-3px);
-            background: rgba(229, 9, 20, 0.1);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .device-item i {
-            font-size: 1.8rem;
-            display: block;
-            margin-bottom: 8px;
-            color: var(--red);
-        }
-        
-        .device-item span {
-            font-size: 0.85rem;
-            display: block;
-        }
-        
-        /* Catalog Section */
-        .catalog {
-            padding: 80px 0;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .catalog-container {
-            display: flex;
-            width: calc(250px * 24);
-            animation: scroll 30s linear infinite;
-        }
-        
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-250px * 12)); }
-        }
-        
-        .catalog-item {
-            width: 250px;
-            flex-shrink: 0;
-            margin-right: 20px;
-            position: relative;
-            border-radius: 6px;
-            overflow: hidden;
-            aspect-ratio: 2/3;
-        }
-        
-        .catalog-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-        
-        .catalog-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 80px 0;
-            background-color: var(--dark-gray);
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 30px;
-            border-radius: 8px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #333;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-        
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(229,9,20,0.1) 0%, rgba(229,9,20,0) 70%);
-            transition: all 0.5s ease;
-        }
-        
-        .pricing-card:hover::before {
-            transform: rotate(180deg);
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
-        }
-        
-        .pricing-card.popular {
-            border: 2px solid var(--red);
-            box-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
-        }
-        
-        .popular-tag {
-            position: absolute;
-            top: -12px;
-            right: 20px;
-            background-color: var(--red);
-            color: var(--white);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
-        }
-        
-        .pricing-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--white);
-        }
-        
-        .price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 20px 0;
-            color: var(--white);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .price::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--red);
-            transform: scaleX(0.8);
-        }
-        
-        .price span {
-            font-size: 1rem;
-            font-weight: 400;
-            opacity: 0.7;
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin: 25px 0;
-            flex-grow: 1;
-        }
-        
-        .pricing-features li {
-            padding: 10px 0;
-            position: relative;
-            padding-left: 30px;
-            border-bottom: 1px dashed rgba(255,255,255,0.1);
-        }
-        
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-features li::before {
-            content: "✓";
-            color: var(--red);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-        
-        .pricing-btn {
-            margin-top: auto;
-            text-align: center;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 80px 0;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .testimonial-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .testimonial-text::before {
-            content: """;
-            color: var(--red);
-            font-size: 3rem;
-            position: absolute;
-            top: -15px;
-            left: -10px;
-            opacity: 0.2;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .testimonial-author img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            object-fit: cover;
-            border: 2px solid var(--red);
-        }
-        
-        .author-info h4 {
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            font-size: 0.9rem;
-            color: #aaa;
-        }
-        
-        /* CTA */
-        .cta {
-            padding: 80px 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('images/bannerhero.png') no-repeat center/cover;
-            text-align: center;
-        }
-        
-        .cta h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            max-width: 600px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid var(--red);
-        }
-        
-        .footer-logo {
-            margin-bottom: 20px;
-        }
-        
-        .footer-logo img {
-            height: 40px;
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links a {
-            color: var(--white);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: var(--red);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .social-links a {
-            color: var(--white);
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--red);
-        }
-        
-        .copyright {
-            font-size: 0.9rem;
-            color: #777;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .nav-links {
-                gap: 15px;
-            }
-            
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .devices-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Filmes HD Clips - IPTV</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #000;
+      color: #fff;
+    }
+
+    header {
+      background: linear-gradient(to right, #111, #222);
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #f00;
+    }
+
+    .hero {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: #f00;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #c00;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding: 40px 20px;
+    }
+
+    .feature {
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .feature i {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #f00;
+    }
+
+    .catalog {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 20px;
+    }
+
+    .catalog img {
+      height: 200px;
+      margin-right: 10px;
+      border-radius: 10px;
+    }
+
+    .pricing {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .plan {
+      background: #111;
+      border: 2px solid #444;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      width: 250px;
+      position: relative;
+    }
+
+    .plan h3 {
+      margin-top: 0;
+      color: #f00;
+    }
+
+    .price {
+      font-size: 1.8em;
+      margin: 10px 0;
+    }
+
+    .plan ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .plan ul li {
+      margin: 8px 0;
+    }
+
+    .plan.popular {
+      border: 2px solid #f00;
+    }
+
+    .badge {
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      .pricing {
+        flex-direction: column;
+        align-items: center;
+      }
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <img src="images/logo.png" alt="Filmes HD Clips">
-                </a>
-                <div class="nav-links">
-                    <a href="#features">Vantagens</a>
-                    <a href="#catalog">Catálogo</a>
-                    <a href="#pricing">Planos</a>
-                    <a href="https://wa.me/5551986585514?text=Olá! Gostaria de saber mais sobre o IPTV." target="_blank">Contato</a>
-                </div>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Filmes em <span>4K</span> e Clipes em <span>HD</span></h1>
-                <p>Tenha acesso ao melhor catálogo de filmes, séries e clipes musicais com qualidade de cinema.</p>
-                <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o Filmes HD Clips." class="btn" target="_blank">Assine Agora</a>
-            </div>
-        </div>
-    </section>
+  <header>
+    <h1>Filmes HD Clips</h1>
+  </header>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Por que escolher nosso serviço?</h2>
-                <p>Oferecemos a melhor experiência em streaming com qualidade premium</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <h3>Catálogo Completo</h3>
-                    <p>Milhares de filmes, séries e clipes musicais atualizados semanalmente.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tv"></i>
-                    </div>
-                    <h3>Qualidade 4K</h3>
-                    <p>Transmissão em alta definição com áudio imersivo para melhor experiência.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Suporte 24/7</h3>
-                    <p>Equipe especializada disponível a qualquer momento para te ajudar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Dispositivos Compatíveis</h3>
-                    <p class="feature-description">Assista em qualquer lugar, em todos seus dispositivos</p>
-                    <div class="devices-grid">
-                        <div class="device-item">
-                            <i class="fab fa-android"></i>
-                            <span>Android</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fab fa-apple"></i>
-                            <span>iOS</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fas fa-tv"></i>
-                            <span>Smart TVs</span>
-                        </div>
-                        <div class="device-item">
-                            <i class="fas fa-laptop"></i>
-                            <span>Computadores</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="hero">
+    <h2>O melhor IPTV com qualidade 4K</h2>
+    <p>Assista filmes, séries e clipes musicais em qualquer dispositivo</p>
+    <a class="btn" href="https://wa.me/seunumero">Assine Agora</a>
+  </section>
 
-    <!-- Catalog Section -->
-    <section class="catalog" id="catalog">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nosso Catálogo</h2>
-                <p>Confira alguns dos títulos disponíveis em nossa plataforma</p>
-            </div>
-            <div class="catalog-container">
-                <div class="catalog-item">
-                    <img src="images/breaking bad.png" alt="Breaking Bad">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/godzilla.png" alt="Godzilla">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/got.png" alt="Game of Thrones">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/meu malvado favorito.png" alt="Meu Malvado Favorito">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/peaky blinders.png" alt="Peaky Blinders">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/stranger things.png" alt="Stranger Things">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/the boys.png" alt="The Boys">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/vingadores.png" alt="Vingadores">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/cobra kai.png" alt="Cobra Kai">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/greys anatomy.png" alt="Grey's Anatomy">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/o mal que nos habita.png" alt="O Mal Que Nos Habita">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/sobrenatural.png" alt="Sobrenatural">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/spider man.png" alt="Homem-Aranha">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/velozes e furiosos.png" alt="Velozes e Furiosos">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/vikings.png" alt="Vikings">
-                </div>
-                <!-- Duplicando para efeito infinito -->
-                <div class="catalog-item">
-                    <img src="images/breaking bad.png" alt="Breaking Bad">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/godzilla.png" alt="Godzilla">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/got.png" alt="Game of Thrones">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/meu malvado favorito.png" alt="Meu Malvado Favorito">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/peaky blinders.png" alt="Peaky Blinders">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/stranger things.png" alt="Stranger Things">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/the boys.png" alt="The Boys">
-                </div>
-                <div class="catalog-item">
-                    <img src="images/vingadores.png" alt="Vingadores">
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="features">
+    <div class="feature">
+      <i class="fas fa-headset"></i>
+      <h3>Suporte</h3>
+      <p>Atendimento rápido e eficiente para você.</p>
+    </div>
+    <div class="feature">
+      <i class="fas fa-tv"></i>
+      <h3>Dispositivos Compatíveis</h3>
+      <p>Smart TVs, TV Box, Celulares, Tablets e PCs.</p>
+    </div>
+  </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nossos Planos</h2>
-                <p>Escolha o plano que melhor atende suas necessidades</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Mensal</h3>
-                    <div class="price">R$29,99 <span>/mês</span></div>
-                    <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
-                        <li>Qualidade Full HD</li>
-                        <li>7 dias de garantia</li>
-                        <li>Suporte básico</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+mensal+R$29,99" class="btn" target="_blank">Assinar</a>
-                    </div>
-                </div>
-                <div class="pricing-card popular">
-                    <div class="popular-tag">Mais Popular</div>
-                    <h3>Trimestral</h3>
-                    <div class="price">R$69,99 <span>/3 meses</span></div>
-                    <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
-                        <li>Qualidade 4K Ultra HD</li>
-                        <li>15 dias de garantia</li>
-                        <li>Suporte prioritário</li>
-                        <li>Economize 22%</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+trimestral+R$69,99" class="btn" target="_blank">Assinar</a>
-                    </div>
-                </div>
-                <div class="pricing-card">
-                    <h3>Anual</h3>
-                    <div class="price">R$239,99 <span>/ano</span></div>
-                    <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
-                        <li>Qualidade 4K HDR</li>
-                        <li>30 dias de garantia</li>
-                        <li>Suporte VIP 24/7</li>
-                        <li>Economize 33%</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://wa.me/5551986585514?text=Quero+o+plano+anual+R$239,99" class="btn" target="_blank">Assinar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="catalog">
+    <img src="images/breaking bad.png" alt="Breaking Bad" loading="lazy">
+    <img src="images/peaky blinders.png" alt="Peaky Blinders" loading="lazy">
+    <img src="images/friends.png" alt="Friends" loading="lazy">
+    <img src="images/flash.png" alt="Flash" loading="lazy">
+    <!-- adicione mais se quiser -->
+  </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>O que nossos clientes dizem</h2>
-                <p>Veja a opinião de quem já assina nosso serviço</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <p>Melhor IPTV que já usei! A qualidade 4K é impressionante e nunca trava. Recomendo demais!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos">
-                        <div class="author-info">
-                            <h4>Carlos Silva</h4>
-                            <p>São Paulo, SP</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <p>Depois de testar vários serviços, finalmente encontrei um que tem todos os filmes e séries que eu gosto.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana">
-                        <div class="author-info">
-                            <h4>Ana Oliveira</h4>
-                            <p>Rio de Janeiro, RJ</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        <p>O atendimento é excelente e resolveram meu problema em menos de 10 minutos. Nota 10!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ricardo">
-                        <div class="author-info">
-                            <h4>Ricardo Santos</h4>
-                            <p>Belo Horizonte, MG</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="pricing">
+    <div class="plan">
+      <h3>Mensal</h3>
+      <p class="price">R$29,99</p>
+      <ul>
+        <li>1 mês de acesso</li>
+        <li>Atualizações inclusas</li>
+        <li>Suporte básico</li>
+      </ul>
+      <a class="btn" href="https://wa.me/seunumero">Assinar</a>
+    </div>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Pronto para começar?</h2>
-            <p>Assine agora e tenha acesso ilimitado ao melhor conteúdo em 4K.</p>
-            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o Filmes HD Clips." class="btn" target="_blank">Assinar Agora</a>
-        </div>
-    </section>
+    <div class="plan popular">
+      <span class="badge">Mais Popular</span>
+      <h3>Trimestral</h3>
+      <p class="price">R$74,99</p>
+      <ul>
+        <li>3 meses de acesso</li>
+        <li>Atualizações e suporte completo</li>
+        <li>Qualidade máxima</li>
+      </ul>
+      <a class="btn" href="https://wa.me/seunumero">Assinar</a>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <img src="images/logo.png" alt="Filmes HD Clips">
-            </div>
-            <div class="footer-links">
-                <a href="#features">Vantagens</a>
-                <a href="#catalog">Catálogo</a>
-                <a href="#pricing">Planos</a>
-                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." target="_blank">Suporte</a>
-            </div>
-            <div class="social-links">
-                <a href="https://www.instagram.com/filmeshdclips/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o IPTV." target="_blank"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <p class="copyright">© 2023 Filmes HD Clips. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <div class="plan">
+      <h3>Semestral</h3>
+      <p class="price">R$129,99</p>
+      <ul>
+        <li>6 meses de acesso</li>
+        <li>Suporte premium</li>
+        <li>Qualidade 4K</li>
+      </ul>
+      <a class="btn" href="https://wa.me/seunumero">Assinar</a>
+    </div>
+
+    <div class="plan">
+      <h3>Anual</h3>
+      <p class="price">R$249,99</p>
+      <ul>
+        <li>12 meses de acesso</li>
+        <li>Suporte total</li>
+        <li>Melhor custo-benefício</li>
+      </ul>
+      <a class="btn" href="https://wa.me/seunumero">Assinar</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Filmes HD Clips - Todos os direitos reservados.</p>
+  </footer>
+
 </body>
 </html>
