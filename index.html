@@ -116,13 +116,16 @@
             transition: all 0.3s;
             border: 2px solid var(--red);
             text-align: center;
+            cursor: pointer;
         }
         
         .btn:hover {
             background-color: transparent;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
         }
         
-        /* Features Section - AJUSTES PRINCIPAIS AQUI */
+        /* Features Section */
         .features {
             padding: 80px 0;
             background-color: var(--dark-gray);
@@ -147,19 +150,19 @@
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 colunas fixas */
-            gap: 20px; /* Reduzi o gap para caber melhor */
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
         
         .feature-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 25px; /* Reduzi o padding */
+            padding: 25px;
             border-radius: 8px;
             text-align: center;
             transition: transform 0.3s;
             border: 1px solid #333;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            min-height: 280px; /* Altura fixa para uniformidade */
+            min-height: 280px;
             display: flex;
             flex-direction: column;
         }
@@ -170,22 +173,21 @@
         }
         
         .feature-icon {
-            font-size: 2rem; /* Reduzi o tamanho do ícone */
+            font-size: 2rem;
             color: var(--red);
             margin-bottom: 15px;
         }
         
         .feature-card h3 {
-            font-size: 1.2rem; /* Reduzi o tamanho da fonte */
+            font-size: 1.2rem;
             margin-bottom: 12px;
         }
         
         .feature-card p {
-            font-size: 0.9rem; /* Reduzi o tamanho da fonte */
-            flex-grow: 1; /* Para alinhar os botões */
+            font-size: 0.9rem;
+            flex-grow: 1;
         }
         
-        /* Restante do CSS permanece igual */
         /* Catalog Section */
         .catalog {
             padding: 80px 0;
@@ -247,7 +249,7 @@
             border: 1px solid #333;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             transition: all 0.3s;
-            overflow: hidden;
+            overflow: visible;
         }
         
         .pricing-card::before {
@@ -259,6 +261,7 @@
             height: 200%;
             background: radial-gradient(circle, rgba(229,9,20,0.1) 0%, rgba(229,9,20,0) 70%);
             transition: all 0.5s ease;
+            z-index: 1;
         }
         
         .pricing-card:hover::before {
@@ -302,6 +305,8 @@
             font-size: 1.5rem;
             margin-bottom: 15px;
             color: var(--white);
+            position: relative;
+            z-index: 2;
         }
         
         .price {
@@ -311,6 +316,7 @@
             color: var(--white);
             position: relative;
             display: inline-block;
+            z-index: 2;
         }
         
         .price::after {
@@ -334,6 +340,8 @@
             list-style: none;
             margin: 25px 0;
             flex-grow: 1;
+            position: relative;
+            z-index: 2;
         }
         
         .pricing-features li {
@@ -358,6 +366,16 @@
         .pricing-btn {
             margin-top: auto;
             text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .pricing-btn a {
+            display: inline-block;
+            pointer-events: auto;
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
         }
         
         /* Testimonials */
@@ -495,7 +513,7 @@
         /* Responsive */
         @media (max-width: 1024px) {
             .features-grid {
-                grid-template-columns: repeat(2, 1fr); /* 2 colunas em tablets */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -513,7 +531,7 @@
             }
             
             .features-grid {
-                grid-template-columns: 1fr; /* 1 coluna em mobile */
+                grid-template-columns: 1fr;
             }
             
             .pricing-grid {
@@ -536,7 +554,7 @@
                     <a href="#features">Vantagens</a>
                     <a href="#catalog">Catálogo</a>
                     <a href="#pricing">Planos</a>
-                    <a href="https://wa.me/5551986585514?text=Olá! Gostaria de saber mais sobre o IPTV." target="_blank">Contato</a>
+                    <a href="https://wa.me/5551986585514?text=Olá! Gostaria de saber mais sobre o IPTV." target="_blank" rel="noopener noreferrer">Contato</a>
                 </div>
             </nav>
         </div>
@@ -548,7 +566,7 @@
             <div class="hero-content">
                 <h1>Filmes em <span>4K</span> e Clipes em <span>HD</span></h1>
                 <p>Tenha acesso ao melhor catálogo de filmes, séries e clipes musicais com qualidade de cinema.</p>
-                <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o Filmes HD Clips." class="btn" target="_blank">Assine Agora</a>
+                <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o Filmes HD Clips." class="btn" target="_blank" rel="noopener noreferrer">Assine Agora</a>
             </div>
         </div>
     </section>
@@ -593,7 +611,6 @@
         </div>
     </section>
 
-    <!-- Restante do código permanece igual -->
     <!-- Catalog Section -->
     <section class="catalog" id="catalog">
         <div class="container">
@@ -684,6 +701,7 @@
                 <p>Escolha o plano que melhor atende suas necessidades</p>
             </div>
             <div class="pricing-grid">
+                <!-- Plano Mensal -->
                 <div class="pricing-card">
                     <h3>Mensal</h3>
                     <div class="price">R$29,99 <span>/mês</span></div>
@@ -694,51 +712,79 @@
                         <li>Suporte básico</li>
                     </ul>
                     <div class="pricing-btn">
-            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o plano mensal" class="btn" target="_blank">Assinar Agora</a>
+                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Mensal%20de%20R$29,99/mês." 
+                           class="btn" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            Assinar
+                        </a>
                     </div>
                 </div>
+
+                <!-- Plano Trimestral -->
                 <div class="pricing-card">
                     <h3>Trimestral</h3>
                     <div class="price">R$69,99 <span>/3 meses</span></div>
                     <ul class="pricing-features">
-                        <li>1 dispositivo simultâneos</li>
+                        <li>2 dispositivos simultâneos</li>
                         <li>Qualidade 4K Ultra HD</li>
                         <li>15 dias de garantia</li>
                         <li>Suporte prioritário</li>
                         <li>Economize 22%</li>
                     </ul>
                     <div class="pricing-btn">
-            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o plano trimestral" class="btn" target="_blank">Assinar Agora</a>
+                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Trimestral%20de%20R$69,99/3%20meses." 
+                           class="btn" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            Assinar
+                        </a>
                     </div>
                 </div>
+
+                <!-- Plano Semestral -->
                 <div class="pricing-card popular">
                     <div class="popular-tag">Mais Popular</div>
                     <h3>Semestral</h3>
                     <div class="price">R$129,99 <span>/6 meses</span></div>
                     <ul class="pricing-features">
-                        <li>1 dispositivo simultâneos</li>
+                        <li>3 dispositivos simultâneos</li>
                         <li>Qualidade 4K Ultra HD</li>
                         <li>30 dias de garantia</li>
                         <li>Suporte VIP</li>
                         <li>Economize 28%</li>
+                        <li>Canais adultos inclusos</li>
                     </ul>
                     <div class="pricing-btn">
-            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o plano semestral" class="btn" target="_blank">Assinar Agora</a>
+                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Semestral%20de%20R$129,99/6%20meses." 
+                           class="btn" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            Assinar
+                        </a>
                     </div>
                 </div>
+
+                <!-- Plano Anual -->
                 <div class="pricing-card">
                     <h3>Anual</h3>
                     <div class="price">R$239,99 <span>/ano</span></div>
                     <ul class="pricing-features">
-                        <li>1 dispositivo simultâneos</li>
+                        <li>5 dispositivos simultâneos</li>
                         <li>Qualidade 4K HDR</li>
                         <li>60 dias de garantia</li>
                         <li>Suporte VIP 24/7</li>
                         <li>Economize 33%</li>
+                        <li>Canais adultos inclusos</li>
                         <li>Conteúdo exclusivo</li>
                     </ul>
                     <div class="pricing-btn">
-            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o plano anual" class="btn" target="_blank">Assinar Agora</a>
+                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Anual%20de%20R$239,99/ano." 
+                           class="btn" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            Assinar
+                        </a>
                     </div>
                 </div>
             </div>
@@ -797,8 +843,8 @@
     <section class="cta">
         <div class="container">
             <h2>Pronto para começar?</h2>
-            <p>Solicite agora seu teste e tenha acesso ilimitado ao melhor conteúdo em 4K.</p>
-            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de realizar um teste." class="btn" target="_blank">Solicite seu Teste Grátis</a>
+            <p>Assine agora e tenha acesso ilimitado ao melhor conteúdo em 4K.</p>
+            <a href="https://wa.me/5551986585514?text=Olá! Quero assinar o Filmes HD Clips." class="btn" target="_blank" rel="noopener noreferrer">Assinar Agora</a>
         </div>
     </section>
 
@@ -812,14 +858,28 @@
                 <a href="#features">Vantagens</a>
                 <a href="#catalog">Catálogo</a>
                 <a href="#pricing">Planos</a>
-                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." target="_blank">Suporte</a>
+                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." target="_blank" rel="noopener noreferrer">Suporte</a>
             </div>
             <div class="social-links">
-                <a href="https://www.instagram.com/filmeshdclips/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o IPTV." target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/filmeshdclips/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o IPTV." target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
             </div>
             <p class="copyright">© 2023 Filmes HD Clips. Todos os direitos reservados.</p>
         </div>
     </footer>
+
+    <!-- JavaScript para garantir funcionamento dos botões -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Garante que todos os cliques nos botões funcionem
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if(this.href) {
+                    window.open(this.href, '_blank');
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
