@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmes HD Clips | IPTV Premium 4K - Assista Filmes e Séries em Alta Qualidade</title>
-    <meta name="description" content="Assista filmes, séries e clipes em 4K com o melhor serviço de IPTV. Teste grátis por 24 horas. Planos a partir de R$29,99/mês.">
-    <meta name="keywords" content="IPTV, filmes online, séries online, streaming, filmes 4K, filmes HD, clipes musicais">
-    <link rel="icon" href="images/logo.png" type="image/png">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Filmes HD Clips | IPTV Premium 4K - Assista Filmes e Séries em Alta Qualidade</title>
+<meta content="Assista filmes, séries e clipes em 4K com o melhor serviço de IPTV. Teste grátis por 24 horas. Planos a partir de R$29,99/mês." name="description"/>
+<meta content="IPTV, filmes online, séries online, streaming, filmes 4K, filmes HD, clipes musicais" name="keywords"/>
+<link href="images/logo.png" rel="icon" type="image/png"/>
+<style>
         :root {
             --primary: #E50914;
             --primary-dark: #B00710;
@@ -348,11 +349,13 @@
         }
         
         .slider-container {
-            display: flex;
-            transition: transform 0.5s ease;
-            gap: 20px;
-            padding: 10px 0;
-        }
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+}
         
         .catalog-item {
             min-width: 250px;
@@ -1063,630 +1066,596 @@
                 padding: 25px;
             }
         }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <style>
+    
+.slider-container::-webkit-scrollbar {
+    display: none;
+}
+.slider-container {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
         img {
             max-width: 100%;
             height: auto;
         }
     </style>
-    </head>
-    
+</head>
 <body>
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o serviço de IPTV." class="whatsapp-float" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <img src="images/logo.png" alt="Filmes HD Clips - IPTV Premium">
-                </a>
-                <div class="nav-links">
-                    <a href="#features"><i class="fas fa-star"></i> Vantagens</a>
-                    <a href="#catalog"><i class="fas fa-film"></i> Catálogo</a>
-                    <a href="#pricing"><i class="fas fa-tags"></i> Planos</a>
-                    <a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
-                    <a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." target="_blank" rel="noopener noreferrer"><i class="fas fa-headset"></i> Suporte</a>
-                </div>
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Assista <span>Filmes</span>, <span>Séries</span> e <span>Clipes</span> em <span>4K Ultra HD</span></h1>
-                <p>Tenha acesso ilimitado ao maior catálogo de entretenimento com qualidade de cinema e suporte 24 horas.</p>
-                <div>
-                    <a href="https://wa.me/5551986585514?text=Olá! Quero realizar Teste Grátis ao aplicativo Filmes HD Clips." class="btn" target="_blank" rel="noopener noreferrer">
-                        <i class="fas fa-play"></i> Teste Grátis
+<!-- Floating WhatsApp Button -->
+<a class="whatsapp-float" href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o serviço de IPTV." rel="noopener noreferrer" target="_blank">
+<i class="fab fa-whatsapp"></i>
+</a>
+<!-- Header -->
+<header id="header">
+<div class="container">
+<nav class="navbar">
+<a class="logo" href="#">
+<img alt="Filmes HD Clips - IPTV Premium" src="images/logo.png"/>
+</a>
+<div class="nav-links">
+<a href="#features"><i class="fas fa-star"></i> Vantagens</a>
+<a href="#catalog"><i class="fas fa-film"></i> Catálogo</a>
+<a href="#pricing"><i class="fas fa-tags"></i> Planos</a>
+<a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a>
+<a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." rel="noopener noreferrer" target="_blank"><i class="fas fa-headset"></i> Suporte</a>
+</div>
+<button class="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+</nav>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="hero">
+<div class="container">
+<div class="hero-content">
+<h1>Assista <span>Filmes</span>, <span>Séries</span> e <span>Clipes</span> em <span>4K Ultra HD</span></h1>
+<p>Tenha acesso ilimitado ao maior catálogo de entretenimento com qualidade de cinema e suporte 24 horas.</p>
+<div>
+<a class="btn" href="https://wa.me/5551986585514?text=Olá! Quero realizar Teste Grátis ao aplicativo Filmes HD Clips." rel="noopener noreferrer" target="_blank">
+<i class="fas fa-play"></i> Teste Grátis
                     </a>
-                    <a href="#pricing" class="btn btn-secondary">
-                        <i class="fas fa-tag"></i> Ver Planos
+<a class="btn btn-secondary" href="#pricing">
+<i class="fas fa-tag"></i> Ver Planos
                     </a>
-                </div>
-                
-                <div class="trust-badges">
-                    <div class="badge">
-                        <i class="fas fa-check-circle"></i> +10.000 clientes satisfeitos
+</div>
+<div class="trust-badges">
+<div class="badge">
+<i class="fas fa-check-circle"></i> +10.000 clientes satisfeitos
                     </div>
-                    <div class="badge">
-                        <i class="fas fa-shield-alt"></i> Pagamento seguro
+<div class="badge">
+<i class="fas fa-shield-alt"></i> Pagamento seguro
                     </div>
-                    <div class="badge">
-                        <i class="fas fa-headset"></i> Suporte 24/7
+<div class="badge">
+<i class="fas fa-headset"></i> Suporte 24/7
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Por que assinar nosso serviço?</h2>
-                <p>Oferecemos a melhor experiência em streaming com qualidade premium e conteúdo exclusivo</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-film"></i>
-                    </div>
-                    <h3>Catálogo Completo</h3>
-                    <p>Mais de 50.000 filmes, séries e clipes musicais atualizados diariamente. Todos os lançamentos em primeira mão.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tv"></i>
-                    </div>
-                    <h3>Qualidade 4K HDR</h3>
-                    <p>Transmissão em ultra alta definição com áudio Dolby Digital Plus para experiência cinematográfica.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Suporte Prioritário</h3>
-                    <p>Equipe especializada disponível 24 horas por dia via WhatsApp para resolver qualquer problema.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Multiplataforma</h3>
-                    <p>Assista em Smart TV, Android, iOS, PC e outros dispositivos. Aplicativo exclusivo incluso.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Instalação Rápida</h3>
-                    <p>Configuração em menos de 5 minutos com nosso tutorial passo a passo e suporte remoto.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Conteúdo Internacional</h3>
-                    <p>Canais e filmes de diversos países com opção de legendas em português.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <h3>TimeShift</h3>
-                    <p>Assista programas até 7 dias depois da exibição original com nossa função de replay.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Privacidade Garantida</h3>
-                    <p>Não registramos seu histórico de visualização. Sua privacidade é nossa prioridade.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Catalog Section -->
-    <section class="catalog" id="catalog">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nosso Catálogo Exclusivo</h2>
-                <p>Confira alguns dos títulos disponíveis em nossa plataforma</p>
-            </div>
-            
-            <div class="catalog-slider">
-                <div class="slider-container" id="slider-container">
-                    <div class="catalog-item">
-                        <img src="images/breaking bad.png" alt="Breaking Bad">
-                        <div class="overlay">
-                            <h3>Breaking Bad</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 9.5/10 IMDb
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="features" id="features">
+<div class="container">
+<div class="section-title">
+<h2>Por que assinar nosso serviço?</h2>
+<p>Oferecemos a melhor experiência em streaming com qualidade premium e conteúdo exclusivo</p>
+</div>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-film"></i>
+</div>
+<h3>Catálogo Completo</h3>
+<p>Mais de 50.000 filmes, séries e clipes musicais atualizados diariamente. Todos os lançamentos em primeira mão.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-tv"></i>
+</div>
+<h3>Qualidade 4K HDR</h3>
+<p>Transmissão em ultra alta definição com áudio Dolby Digital Plus para experiência cinematográfica.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-headset"></i>
+</div>
+<h3>Suporte Prioritário</h3>
+<p>Equipe especializada disponível 24 horas por dia via WhatsApp para resolver qualquer problema.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<h3>Multiplataforma</h3>
+<p>Assista em Smart TV, Android, iOS, PC e outros dispositivos. Aplicativo exclusivo incluso.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-bolt"></i>
+</div>
+<h3>Instalação Rápida</h3>
+<p>Configuração em menos de 5 minutos com nosso tutorial passo a passo e suporte remoto.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-globe"></i>
+</div>
+<h3>Conteúdo Internacional</h3>
+<p>Canais e filmes de diversos países com opção de legendas em português.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-history"></i>
+</div>
+<h3>TimeShift</h3>
+<p>Assista programas até 7 dias depois da exibição original com nossa função de replay.</p>
+</div>
+<div class="feature-card">
+<div class="feature-icon">
+<i class="fas fa-lock"></i>
+</div>
+<h3>Privacidade Garantida</h3>
+<p>Não registramos seu histórico de visualização. Sua privacidade é nossa prioridade.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Catalog Section -->
+<section class="catalog" id="catalog">
+<div class="container">
+<div class="section-title">
+<h2>Nosso Catálogo Exclusivo</h2>
+<p>Confira alguns dos títulos disponíveis em nossa plataforma</p>
+</div>
+<div class="catalog-slider" style="position: relative;">
+<div class="slider-container" id="slider-container">
+<div class="catalog-item">
+<img alt="Breaking Bad" src="images/breaking bad.png"/>
+<div class="overlay">
+<h3>Breaking Bad</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 9.5/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Breaking Bad." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Breaking Bad." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/godzilla.png" alt="Godzilla vs Kong">
-                        <div class="overlay">
-                            <h3>Godzilla vs Kong</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.3/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Godzilla vs Kong" src="images/godzilla.png"/>
+<div class="overlay">
+<h3>Godzilla vs Kong</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.3/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Godzilla vs Kong." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Godzilla vs Kong." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/got.png" alt="Game of Thrones">
-                        <div class="overlay">
-                            <h3>Game of Thrones</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 9.3/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Game of Thrones" src="images/got.png"/>
+<div class="overlay">
+<h3>Game of Thrones</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 9.3/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Game of Thrones." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Game of Thrones." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/meu malvado favorito.png" alt="Meu Malvado Favorito">
-                        <div class="overlay">
-                            <h3>Meu Malvado Favorito</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 7.6/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Meu Malvado Favorito" src="images/meu malvado favorito.png"/>
+<div class="overlay">
+<h3>Meu Malvado Favorito</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 7.6/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Meu Malvado Favorito." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Meu Malvado Favorito." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/peaky blinders.png" alt="Peaky Blinders">
-                        <div class="overlay">
-                            <h3>Peaky Blinders</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.8/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Peaky Blinders" src="images/peaky blinders.png"/>
+<div class="overlay">
+<h3>Peaky Blinders</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.8/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Peaky Blinders." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Peaky Blinders." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/stranger things.png" alt="Stranger Things">
-                        <div class="overlay">
-                            <h3>Stranger Things</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.7/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Stranger Things" src="images/stranger things.png"/>
+<div class="overlay">
+<h3>Stranger Things</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.7/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Stranger Things." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Stranger Things." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/the boys.png" alt="The Boys">
-                        <div class="overlay">
-                            <h3>The Boys</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.7/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="The Boys" src="images/the boys.png"/>
+<div class="overlay">
+<h3>The Boys</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.7/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir The Boys." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir The Boys." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/vingadores.png" alt="Vingadores: Ultimato">
-                        <div class="overlay">
-                            <h3>Vingadores: Ultimato</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.4/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Vingadores: Ultimato" src="images/vingadores.png"/>
+<div class="overlay">
+<h3>Vingadores: Ultimato</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.4/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Vingadores: Ultimato." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Vingadores: Ultimato." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/cobra kai.png" alt="Cobra Kai">
-                        <div class="overlay">
-                            <h3>Cobra Kai</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.6/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Cobra Kai" src="images/cobra kai.png"/>
+<div class="overlay">
+<h3>Cobra Kai</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.6/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Cobra Kai." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Cobra Kai." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/greys anatomy.png" alt="Grey's Anatomy">
-                        <div class="overlay">
-                            <h3>Grey's Anatomy</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 7.6/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Grey's Anatomy" src="images/greys anatomy.png"/>
+<div class="overlay">
+<h3>Grey's Anatomy</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 7.6/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Grey's Anatomy." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Grey's Anatomy." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/o mal que nos habita.png" alt="O Mal Que Nos Habita">
-                        <div class="overlay">
-                            <h3>O Mal Que Nos Habita</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 7.4/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="O Mal Que Nos Habita" src="images/o mal que nos habita.png"/>
+<div class="overlay">
+<h3>O Mal Que Nos Habita</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 7.4/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir O Mal Que Nos Habita." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir O Mal Que Nos Habita." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                    <div class="catalog-item">
-                        <img src="images/sobrenatural.png" alt="Sobrenatural">
-                        <div class="overlay">
-                            <h3>Sobrenatural</h3>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> 8.4/10 IMDb
+</div>
+</div>
+<div class="catalog-item">
+<img alt="Sobrenatural" src="images/sobrenatural.png"/>
+<div class="overlay">
+<h3>Sobrenatural</h3>
+<div class="rating">
+<i class="fas fa-star"></i> 8.4/10 IMDb
                             </div>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Sobrenatural." class="btn-small" target="_blank" rel="noopener noreferrer">
+<a class="btn-small" href="https://wa.me/5551986585514?text=Olá! Gostaria de assistir Sobrenatural." rel="noopener noreferrer" target="_blank">
                                 Assistir
                             </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="slider-nav" id="slider-nav">
-                    <div class="slider-dot active"></div>
-                    <div class="slider-dot"></div>
-                    <div class="slider-dot"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nossos Planos</h2>
-                <p>Escolha o plano perfeito para sua diversão sem limites</p>
-            </div>
-            <div class="pricing-grid">
-                <!-- Plano Mensal -->
-                <div class="pricing-card">
-                    <h3>Mensal</h3>
-                    <div class="price">R$29,99 <span>/mês</span></div>
-                    <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
-                        <li>Qualidade Full HD</li>
-                        <li>7 dias de garantia</li>
-                        <li>Suporte básico</li>
-                        <li>Catálogo completo</li>
-                        <li>Atualizações semanais</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Mensal%20de%20R$29,99/mês." 
-                           class="btn" 
-                           target="_blank" 
-                           rel="noopener noreferrer">
-                            <i class="fas fa-shopping-cart"></i> Assinar Agora
+</div>
+</div>
+</div>
+<div class="slider-nav" id="slider-nav">
+<div class="slider-dot active"></div>
+<div class="slider-dot"></div>
+<div class="slider-dot"></div>
+</div>
+<button class="slider-arrow left"></button><button class="slider-arrow right"></button></div>
+</div>
+</section>
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+<div class="container">
+<div class="section-title">
+<h2>Nossos Planos</h2>
+<p>Escolha o plano perfeito para sua diversão sem limites</p>
+</div>
+<div class="pricing-grid">
+<!-- Plano Mensal -->
+<div class="pricing-card">
+<h3>Mensal</h3>
+<div class="price">R$29,99 <span>/mês</span></div>
+<ul class="pricing-features">
+<li>1 dispositivo simultâneo</li>
+<li>Qualidade Full HD</li>
+<li>7 dias de garantia</li>
+<li>Suporte básico</li>
+<li>Catálogo completo</li>
+<li>Atualizações semanais</li>
+</ul>
+<div class="pricing-btn">
+<a class="btn" href="https://api.whatsapp.com/send?phone=5551986585514&amp;text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Mensal%20de%20R$29,99/mês." rel="noopener noreferrer" target="_blank">
+<i class="fas fa-shopping-cart"></i> Assinar Agora
                         </a>
-                    </div>
-                </div>
-
-                <!-- Plano Trimestral -->
-                <div class="pricing-card">
-                    <h3>Trimestral</h3>
-                    <div class="price">R$69,99 <span>/3 meses</span> <span class="savings-badge">Economize 22%</span></div>
-                    <ul class="pricing-features">
-                        <li>1 dispositivo simultâneo</li>
-                        <li>Qualidade 4K Ultra HD</li>
-                        <li>15 dias de garantia</li>
-                        <li>Suporte prioritário</li>
-                        <li>Catálogo completo</li>
-                        <li>Atualizações diárias</li>
-                        <li>Conteúdo exclusivo</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Trimestral%20de%20R$69,99/3%20meses." 
-                           class="btn" 
-                           target="_blank" 
-                           rel="noopener noreferrer">
-                            <i class="fas fa-shopping-cart"></i> Assinar Agora
+</div>
+</div>
+<!-- Plano Trimestral -->
+<div class="pricing-card">
+<h3>Trimestral</h3>
+<div class="price">R$69,99 <span>/3 meses</span> <span class="savings-badge">Economize 22%</span></div>
+<ul class="pricing-features">
+<li>1 dispositivo simultâneo</li>
+<li>Qualidade 4K Ultra HD</li>
+<li>15 dias de garantia</li>
+<li>Suporte prioritário</li>
+<li>Catálogo completo</li>
+<li>Atualizações diárias</li>
+<li>Conteúdo exclusivo</li>
+</ul>
+<div class="pricing-btn">
+<a class="btn" href="https://api.whatsapp.com/send?phone=5551986585514&amp;text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Trimestral%20de%20R$69,99/3%20meses." rel="noopener noreferrer" target="_blank">
+<i class="fas fa-shopping-cart"></i> Assinar Agora
                         </a>
-                    </div>
-                </div>
-
-                <!-- Plano Semestral -->
-                <div class="pricing-card popular">
-                    <div class="popular-tag">Mais Popular</div>
-                    <h3>Semestral</h3>
-                    <div class="price">R$129,99 <span>/6 meses</span> <span class="savings-badge">Economize 28%</span></div>
-                    <ul class="pricing-features">
-                        <li>2 dispositivos simultâneos</li>
-                        <li>Qualidade 4K HDR</li>
-                        <li>30 dias de garantia</li>
-                        <li>Suporte VIP 24/7</li>
-                        <li>Catálogo completo</li>
-                        <li>Atualizações em tempo real</li>
-                        <li>Conteúdo exclusivo</li>
-                        <li>Acesso antecipado</li>
-                    </ul>
-                    <div class="pricing-btn">
-                        <a href="https://api.whatsapp.com/send?phone=5551986585514&text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Semestral%20de%20R$129,99/6%20meses." 
-                           class="btn" 
-                           target="_blank" 
-                           rel="noopener noreferrer">
-                            <i class="fas fa-shopping-cart"></i> Assinar Agora
+</div>
+</div>
+<!-- Plano Semestral -->
+<div class="pricing-card popular">
+<div class="popular-tag">Mais Popular</div>
+<h3>Semestral</h3>
+<div class="price">R$129,99 <span>/6 meses</span> <span class="savings-badge">Economize 28%</span></div>
+<ul class="pricing-features">
+<li>2 dispositivos simultâneos</li>
+<li>Qualidade 4K HDR</li>
+<li>30 dias de garantia</li>
+<li>Suporte VIP 24/7</li>
+<li>Catálogo completo</li>
+<li>Atualizações em tempo real</li>
+<li>Conteúdo exclusivo</li>
+<li>Acesso antecipado</li>
+</ul>
+<div class="pricing-btn">
+<a class="btn" href="https://api.whatsapp.com/send?phone=5551986585514&amp;text=Olá!%20Gostaria%20de%20assinar%20o%20plano%20Semestral%20de%20R$129,99/6%20meses." rel="noopener noreferrer" target="_blank">
+<i class="fas fa-shopping-cart"></i> Assinar Agora
                         </a>
-                    </div>
+</div>
+</div>
+</div>
+</div>
+<div class="payment-methods">
+<div class="payment-method">
+<i class="fab fa-cc-visa"></i> Cartão de Crédito
                 </div>
-
+<div class="payment-method">
+<i class="fab fa-pix"></i> PIX
                 </div>
-            </div>
-            
-            <div class="payment-methods">
-                <div class="payment-method">
-                    <i class="fab fa-cc-visa"></i> Cartão de Crédito
+<div class="payment-method">
+<i class="fab fa-paypal"></i> PayPal
                 </div>
-                <div class="payment-method">
-                    <i class="fab fa-pix"></i> PIX
+<div class="payment-method">
+<i class="fas fa-barcode"></i> Boleto
                 </div>
-                <div class="payment-method">
-                    <i class="fab fa-paypal"></i> PayPal
-                </div>
-                <div class="payment-method">
-                    <i class="fas fa-barcode"></i> Boleto
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Avaliações de Clientes</h2>
-                <p>Veja o que nossos assinantes estão dizendo sobre o serviço</p>
-            </div>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>Melhor IPTV que já usei! A qualidade 4K é impressionante e nunca trava. O catálogo tem todos os filmes e séries que eu quero assistir, e o suporte resolveu meu problema em menos de 10 minutos. Recomendo demais!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos">
-                        <div class="author-info">
-                            <h4>Carlos Silva</h4>
-                            <p>São Paulo, SP  Assinante há 8 meses</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>Depois de testar vários serviços, finalmente encontrei um que vale cada centavo. O aplicativo é super estável, a qualidade da imagem é perfeita e sempre tem os lançamentos antes de outras plataformas. A família toda adorou!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana">
-                        <div class="author-info">
-                            <h4>Ana Oliveira</h4>
-                            <p>Rio de Janeiro, RJ  Assinante há 5 meses</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <div class="testimonial-text">
-                        <p>O atendimento é excelente! Tive dúvidas na instalação e me atenderam com paciência até eu conseguir configurar tudo. Agora posso assistir meus filmes favoritos em 4K no conforto do meu sofá. Vale muito a pena pelo preço!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ricardo">
-                        <div class="author-info">
-                            <h4>Ricardo Santos</h4>
-                            <p>Belo Horizonte, MG  Assinante há 1 ano</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Perguntas Frequentes</h2>
-                <p>Tire suas dúvidas sobre nosso serviço de IPTV</p>
-            </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Como funciona o teste grátis?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Oferecemos um teste gratuito de 4 horas para você conhecer nossa plataforma. Basta entrar em contato pelo WhatsApp que enviamos todas as instruções de acesso. Durante o período de teste, você terá acesso completo ao catálogo para avaliar a qualidade do serviço.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Quais dispositivos são compatíveis?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Nosso serviço funciona em Smart TVs (Android TV, LG WebOS, Samsung Tizen), dispositivos móveis (Android e iOS), computadores (Windows e Mac) e boxes como Mi Box, Fire TV Stick, Chromecast e outros. Também fornecemos um aplicativo exclusivo para melhor experiência.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Como é feita a instalação?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Após a assinatura, enviamos um e-mail com um tutorial passo a passo e todas as credenciais de acesso. Para dispositivos Android, fornecemos nosso aplicativo exclusivo. Para outras plataformas, indicamos os melhores players compatíveis. Nossa equipe de suporte também está disponível para auxiliar na instalação remota se necessário.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>O serviço tem garantia?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sim, todos os planos possuem período de garantia (7 a 60 dias dependendo do plano escolhido). Caso não fique satisfeito com o serviço, devolveremos seu dinheiro sem burocracia. Nossa taxa de satisfação é de 98%, mas garantimos o reembolso integral se o serviço não atender suas expectativas.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Como são as atualizações de conteúdo?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Atualizamos nosso catálogo diariamente com os principais lançamentos de filmes e séries. Os conteúdos mais recentes geralmente estão disponíveis em até 24h após seu lançamento oficial. Também adicionamos regularmente canais internacionais e conteúdo exclusivo para nossos assinantes.</p>
-                    </div>
-                </div>
-                
-
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Pronto para transformar sua experiência de entretenimento?</h2>
-            <p>Assine agora e tenha acesso ilimitado ao maior catálogo de filmes, séries canais ao vivo e clipes em 4K com qualidade de cinema.</p>
-            <div class="cta-buttons">
-                <a href="https://wa.me/5551986585514?text=Olá! Quero realizar o Teste Grátis no aplicativo Filmes HD Clips." class="btn" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-play"></i> Teste Grátis por 4h
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="testimonials">
+<div class="container">
+<div class="section-title">
+<h2>Avaliações de Clientes</h2>
+<p>Veja o que nossos assinantes estão dizendo sobre o serviço</p>
+</div>
+<div class="testimonial-grid">
+<div class="testimonial-card">
+<div class="rating-stars">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+</div>
+<div class="testimonial-text">
+<p>Melhor IPTV que já usei! A qualidade 4K é impressionante e nunca trava. O catálogo tem todos os filmes e séries que eu quero assistir, e o suporte resolveu meu problema em menos de 10 minutos. Recomendo demais!</p>
+</div>
+<div class="testimonial-author">
+<img alt="Carlos" src="https://randomuser.me/api/portraits/men/32.jpg"/>
+<div class="author-info">
+<h4>Carlos Silva</h4>
+<p>São Paulo, SP  Assinante há 8 meses</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<div class="rating-stars">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+</div>
+<div class="testimonial-text">
+<p>Depois de testar vários serviços, finalmente encontrei um que vale cada centavo. O aplicativo é super estável, a qualidade da imagem é perfeita e sempre tem os lançamentos antes de outras plataformas. A família toda adorou!</p>
+</div>
+<div class="testimonial-author">
+<img alt="Ana" src="https://randomuser.me/api/portraits/women/44.jpg"/>
+<div class="author-info">
+<h4>Ana Oliveira</h4>
+<p>Rio de Janeiro, RJ  Assinante há 5 meses</p>
+</div>
+</div>
+</div>
+<div class="testimonial-card">
+<div class="rating-stars">
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star-half-alt"></i>
+</div>
+<div class="testimonial-text">
+<p>O atendimento é excelente! Tive dúvidas na instalação e me atenderam com paciência até eu conseguir configurar tudo. Agora posso assistir meus filmes favoritos em 4K no conforto do meu sofá. Vale muito a pena pelo preço!</p>
+</div>
+<div class="testimonial-author">
+<img alt="Ricardo" src="https://randomuser.me/api/portraits/men/75.jpg"/>
+<div class="author-info">
+<h4>Ricardo Santos</h4>
+<p>Belo Horizonte, MG  Assinante há 1 ano</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="faq" id="faq">
+<div class="container">
+<div class="section-title">
+<h2>Perguntas Frequentes</h2>
+<p>Tire suas dúvidas sobre nosso serviço de IPTV</p>
+</div>
+<div class="faq-container">
+<div class="faq-item">
+<div class="faq-question">
+<span>Como funciona o teste grátis?</span>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Oferecemos um teste gratuito de 4 horas para você conhecer nossa plataforma. Basta entrar em contato pelo WhatsApp que enviamos todas as instruções de acesso. Durante o período de teste, você terá acesso completo ao catálogo para avaliar a qualidade do serviço.</p>
+</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">
+<span>Quais dispositivos são compatíveis?</span>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Nosso serviço funciona em Smart TVs (Android TV, LG WebOS, Samsung Tizen), dispositivos móveis (Android e iOS), computadores (Windows e Mac) e boxes como Mi Box, Fire TV Stick, Chromecast e outros. Também fornecemos um aplicativo exclusivo para melhor experiência.</p>
+</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">
+<span>Como é feita a instalação?</span>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Após a assinatura, enviamos um e-mail com um tutorial passo a passo e todas as credenciais de acesso. Para dispositivos Android, fornecemos nosso aplicativo exclusivo. Para outras plataformas, indicamos os melhores players compatíveis. Nossa equipe de suporte também está disponível para auxiliar na instalação remota se necessário.</p>
+</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">
+<span>O serviço tem garantia?</span>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Sim, todos os planos possuem período de garantia (7 a 60 dias dependendo do plano escolhido). Caso não fique satisfeito com o serviço, devolveremos seu dinheiro sem burocracia. Nossa taxa de satisfação é de 98%, mas garantimos o reembolso integral se o serviço não atender suas expectativas.</p>
+</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">
+<span>Como são as atualizações de conteúdo?</span>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Atualizamos nosso catálogo diariamente com os principais lançamentos de filmes e séries. Os conteúdos mais recentes geralmente estão disponíveis em até 24h após seu lançamento oficial. Também adicionamos regularmente canais internacionais e conteúdo exclusivo para nossos assinantes.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="cta">
+<div class="container">
+<h2>Pronto para transformar sua experiência de entretenimento?</h2>
+<p>Assine agora e tenha acesso ilimitado ao maior catálogo de filmes, séries canais ao vivo e clipes em 4K com qualidade de cinema.</p>
+<div class="cta-buttons">
+<a class="btn" href="https://wa.me/5551986585514?text=Olá! Quero realizar o Teste Grátis no aplicativo Filmes HD Clips." rel="noopener noreferrer" target="_blank">
+<i class="fas fa-play"></i> Teste Grátis por 4h
                 </a>
-                <a href="#pricing" class="btn btn-secondary">
-                    <i class="fas fa-tags"></i> Ver Todos os Planos
+<a class="btn btn-secondary" href="#pricing">
+<i class="fas fa-tags"></i> Ver Todos os Planos
                 </a>
-            </div>
-            
-            <div class="security-badges">
-                <div class="security-badge">
-                    <i class="fas fa-lock"></i> Pagamento 100% seguro
+</div>
+<div class="security-badges">
+<div class="security-badge">
+<i class="fas fa-lock"></i> Pagamento 100% seguro
                 </div>
-                <div class="security-badge">
-                    <i class="fas fa-shield-alt"></i> Dados protegidos
+<div class="security-badge">
+<i class="fas fa-shield-alt"></i> Dados protegidos
                 </div>
-                <div class="security-badge">
-                    <i class="fas fa-medal"></i> Garantia de satisfação
+<div class="security-badge">
+<i class="fas fa-medal"></i> Garantia de satisfação
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <img src="images/logo.png" alt="Filmes HD Clips">
-            </div>
-            
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Navegação</h3>
-                    <ul class="footer-links">
-                        <li><a href="#features">Vantagens</a></li>
-                        <li><a href="#catalog">Catálogo</a></li>
-                        <li><a href="#pricing">Planos</a></li>
-                        <li><a href="#faq">Perguntas Frequentes</a></li>
-                        <li><a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." target="_blank" rel="noopener noreferrer">Suporte</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Termos de Uso</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Garantia</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Contato</h3>
-                    <div class="footer-contact">
-                        <p><i class="fab fa-whatsapp"></i> (51) 98658-5514</p>
-                        <p><i class="fas fa-envelope"></i> contato@filmeshdclips.com.br</p>
-                        <p><i class="fas fa-clock"></i> Suporte 24 horas por dia</p>
-                        
-                        <div class="social-links">
-                            <a href="https://www.instagram.com/filmeshdclips/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                            <a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o IPTV." target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Formas de Pagamento</h3>
-                    <div class="payment-icons">
-                        <i class="fab fa-cc-visa" title="Visa"></i>
-                        <i class="fab fa-cc-mastercard" title="Mastercard"></i>
-                        <i class="fab fa-cc-amex" title="American Express"></i>
-                        <i class="fab fa-cc-paypal" title="PayPal"></i>
-                        <i class="fab fa-pix" title="PIX"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">© 2023 Filmes HD Clips. Todos os direitos reservados.</p>
-                <p>Este serviço não transmite canais premium protegidos por direitos autorais. Todo o conteúdo é disponibilizado através de fontes públicas na internet.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="footer-logo">
+<img alt="Filmes HD Clips" src="images/logo.png"/>
+</div>
+<div class="footer-content">
+<div class="footer-column">
+<h3>Navegação</h3>
+<ul class="footer-links">
+<li><a href="#features">Vantagens</a></li>
+<li><a href="#catalog">Catálogo</a></li>
+<li><a href="#pricing">Planos</a></li>
+<li><a href="#faq">Perguntas Frequentes</a></li>
+<li><a href="https://wa.me/5551986585514?text=Olá! Gostaria de suporte." rel="noopener noreferrer" target="_blank">Suporte</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Legal</h3>
+<ul class="footer-links">
+<li><a href="#">Termos de Uso</a></li>
+<li><a href="#">Política de Privacidade</a></li>
+<li><a href="#">Cookies</a></li>
+<li><a href="#">Garantia</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Contato</h3>
+<div class="footer-contact">
+<p><i class="fab fa-whatsapp"></i> (51) 98658-5514</p>
+<p><i class="fas fa-envelope"></i> contato@filmeshdclips.com.br</p>
+<p><i class="fas fa-clock"></i> Suporte 24 horas por dia</p>
+<div class="social-links">
+<a href="https://www.instagram.com/filmeshdclips/" rel="noopener noreferrer" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://wa.me/5551986585514?text=Olá! Gostaria de informações sobre o IPTV." rel="noopener noreferrer" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</div>
+</div>
+</div>
+<div class="footer-column">
+<h3>Formas de Pagamento</h3>
+<div class="payment-icons">
+<i class="fab fa-cc-visa" title="Visa"></i>
+<i class="fab fa-cc-mastercard" title="Mastercard"></i>
+<i class="fab fa-cc-amex" title="American Express"></i>
+<i class="fab fa-cc-paypal" title="PayPal"></i>
+<i class="fab fa-pix" title="PIX"></i>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<p class="copyright">© 2023 Filmes HD Clips. Todos os direitos reservados.</p>
+<p>Este serviço não transmite canais premium protegidos por direitos autorais. Todo o conteúdo é disponibilizado através de fontes públicas na internet.</p>
+</div>
+</div>
+</footer>
+<!-- JavaScript -->
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         // Header scroll effect
         const header = document.getElementById('header');
@@ -1720,7 +1689,6 @@
         handleResize();
     });
     </script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('slider-container');
@@ -1759,6 +1727,20 @@ document.addEventListener('DOMContentLoaded', function () {
 .slider-arrow.left { left: -25px; }
 .slider-arrow.right { right: -25px; }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.getElementById('slider-container');
+    const btnLeft = document.querySelector('.slider-arrow.left');
+    const btnRight = document.querySelector('.slider-arrow.right');
 
+    btnLeft.addEventListener('click', () => {
+        container.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+
+    btnRight.addEventListener('click', () => {
+        container.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+});
+</script>
 </body>
 </html>
