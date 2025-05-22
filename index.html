@@ -343,14 +343,17 @@
         }
         
         .catalog-slider {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
+    position: relative;
             position: relative;
             margin: 40px 0;
         }
         
         .slider-container {
-    min-width: max-content;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+    width: max-content;
             display: flex;
             transition: transform 0.5s ease;
             gap: 20px;
@@ -434,6 +437,12 @@
         }
         
         .slider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
             width: 12px;
             height: 12px;
             border-radius: 50%;
@@ -1772,6 +1781,35 @@
         
         window.addEventListener('resize', handleResize);
         handleResize();
+    });
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderContainer = document.getElementById('slider-container');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        const totalSlides = dots.length;
+        const itemsPerSlide = Math.floor(window.innerWidth / 250);
+        const slideSize = 250 + 20;
+
+        function goToSlide(index) {
+            currentSlide = index;
+            sliderContainer.style.transform = `translateX(-${currentSlide * itemsPerSlide * slideSize}px)`;
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => goToSlide(index));
+        });
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            goToSlide(currentSlide);
+        }, 5000);
+
+        goToSlide(0);
     });
     </script>
 </body>
