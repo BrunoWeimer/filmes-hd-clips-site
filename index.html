@@ -1069,7 +1069,26 @@
                 padding: 25px;
             }
         }
-    </style>
+    
+@media (max-width: 768px) {
+  .slider-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-left: 10px;
+  }
+
+  .catalog-item {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    min-width: 70%;
+  }
+
+  .catalog-slider {
+    overflow: hidden;
+  }
+}
+</style>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
