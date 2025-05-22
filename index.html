@@ -582,7 +582,7 @@
         }
         
         .pricing-features li::before {
-            content: "?";
+            content: "✓";
             color: var(--primary);
             position: absolute;
             left: 0;
@@ -1709,7 +1709,7 @@
         
         function goToSlide(index) {
             currentSlide = index;
-            sliderContainer.style.transform = translateX(-${currentSlide * slideWidth * 4}px);
+            sliderContainer.style.transform = `translateX(-${currentSlide * slideWidth * 4}px)`;
             
             // Update dots
             dots.forEach((dot, i) => {
