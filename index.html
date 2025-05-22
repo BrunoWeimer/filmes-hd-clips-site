@@ -582,7 +582,7 @@
         }
         
         .pricing-features li::before {
-            content: "✓";
+            content: "?";
             color: var(--primary);
             position: absolute;
             left: 0;
@@ -1671,7 +1671,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p class="copyright">© 2023 Filmes HD Clips. Todos os direitos reservados.</p>
+                <p class="copyright">©️ 2023 Filmes HD Clips. Todos os direitos reservados.</p>
                 <p>Este serviço não transmite canais premium protegidos por direitos autorais. Todo o conteúdo é disponibilizado através de fontes públicas na internet.</p>
             </div>
         </div>
@@ -1709,7 +1709,7 @@
         
         function goToSlide(index) {
             currentSlide = index;
-            sliderContainer.style.transform = `translateX(-${currentSlide * slideWidth * 4}px)`;
+            sliderContainer.style.transform = translateX(-${currentSlide * slideWidth * 4}px);
             
             // Update dots
             dots.forEach((dot, i) => {
