@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Links - Filmes HD Clips (Vermelho com Destaque)</title>
 <style>
   body {
     margin: 0;
@@ -30,8 +31,15 @@
     color: #b71c1c;
     font-weight: 700;
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     user-select: none;
+  }
+
+  .descricao {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 1.8rem;
+    line-height: 1.4;
   }
 
   .link-btn {
@@ -85,36 +93,36 @@
   }
 
   .streaming-carousel {
-    overflow-x: auto;
+    overflow: hidden;
     margin: 2rem 0 1rem;
-    padding-bottom: 0.5rem;
+    position: relative;
   }
 
   .carousel-track {
     display: flex;
     gap: 20px;
     align-items: center;
+    animation: scroll 20s linear infinite;
     width: max-content;
   }
 
   .carousel-track img {
     height: 40px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px 16px;
+    border-radius: 12px;
     flex-shrink: 0;
-    transition: transform 0.3s ease;
     user-select: none;
+    transition: transform 0.3s ease;
   }
 
   .carousel-track img:hover {
     transform: scale(1.1);
   }
 
-  .streaming-carousel::-webkit-scrollbar {
-    display: none;
-  }
-
-  .streaming-carousel {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
   footer {
@@ -155,49 +163,56 @@
   <div class="container">
     <img src="https://github.com/BrunoWeimer/filmes-hd-clips-site/blob/cd3d2ce31cea7ba64c110508df55a5147d08e01f/images/logo.png?raw=true" alt="Filmes HD Clips Logo" class="logo" loading="lazy" />
 
+    <h1>Filmes HD Clips</h1>
 
+    <p class="descricao">
+      🎬 Cenas icônicas de filmes e séries <br>
+      📲 Teste grátis, tudo em um só lugar.
+    </p>
+
+    <!-- Links -->
     <a href="http://www.filmeshdclips.com.br" class="link-btn" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7v13h20V7l-10-5zm0 2.18L18.18 7H5.82L12 4.18zM4 9h16v11H4V9z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7v13h20V7l-10-5zm0 2.18L18.18 7H5.82L12 4.18zM4 9h16v11H4V9z"/></svg>
       Acesse o site
     </a>
-
-    <a href="http://filmeshdclips.com.br/#features" class="link-btn" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+    <a href="http://filmeshdclips.com.br/#features" class="link-btn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
       Por que assinar nosso serviço?
     </a>
-
-    <a href="http://filmeshdclips.com.br/#pricing" class="link-btn" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19h12v-2H6v2zm0-8h12v-2H6v2zm0-6v2h12V5H6z"/></svg>
+    <a href="http://filmeshdclips.com.br/#pricing" class="link-btn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M6 19h12v-2H6v2zm0-8h12v-2H6v2zm0-6v2h12V5H6z"/></svg>
       Planos
     </a>
-
-    <a href="http://filmeshdclips.com.br/#faq" class="link-btn" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+    <a href="http://filmeshdclips.com.br/#faq" class="link-btn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
       Perguntas Frequentes
     </a>
-
-    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Gostaria%20de%20suporte." class="link-btn" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5a10.1 10.1 0 0 0-15.56 13.72L3 21l4.02-1.05A10.1 10.1 0 1 0 20.5 3.5zM12 19a7 7 0 1 1 7-7 7.008 7.008 0 0 1-7 7z"/><path d="M15.04 14.08l-1.15-.58a.5.5 0 0 0-.52.07l-1.1 1.1a8 8 0 0 1-1.37-1.37l1.1-1.1a.5.5 0 0 0 .07-.52l-.58-1.15a.5.5 0 0 0-.85-.11L9.29 12a3.4 3.4 0 0 0 5.42 2.08 0.5.5 0 0 0-.1-.11z"/></svg>
+    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Gostaria%20de%20suporte." class="link-btn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M20.5 3.5a10.1 10.1 0 0 0-15.56 13.72L3 21l4.02-1.05A10.1 10.1 0 1 0 20.5 3.5zM12 19a7 7 0 1 1 7-7 7.008 7.008 0 0 1-7 7z"/><path d="M15.04 14.08l-1.15-.58a.5.5 0 0 0-.52.07l-1.1 1.1a8 8 0 0 1-1.37-1.37l1.1-1.1a.5.5 0 0 0 .07-.52l-.58-1.15a.5.5 0 0 0-.85-.11L9.29 12a3.4 3.4 0 0 0 5.42 2.08 0.5.5 0 0 0-.1-.11z"/></svg>
       Suporte
     </a>
-
-    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Quero%20realizar%20o%20Teste%20Gr%C3%A1tis%20no%20aplicativo%20Filmes%20HD%20Clips." class="link-btn teste-gratis" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Quero%20realizar%20o%20Teste%20Gr%C3%A1tis%20no%20aplicativo%20Filmes%20HD%20Clips." class="link-btn teste-gratis" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
       Teste Grátis 4h
     </a>
 
-    <!-- Carrossel de ícones de streaming -->
+    <!-- Carrossel -->
     <div class="streaming-carousel">
       <div class="carousel-track">
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" />
         <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" alt="Prime Video" />
         <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" />
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg" alt="HBO Max" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Globoplay_2021_logo.svg" alt="Globoplay" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Apple_TV_Plus_Logo.svg" alt="Apple TV+" />
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Star%2B_logo.svg" alt="Star+" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Globoplay-logo.png/640px-Globoplay-logo.png" alt="Globoplay" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/SporTV_2021.png/640px-SporTV_2021.png" alt="SporTV" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/ESPN_Deportes.svg/640px-ESPN_Deportes.svg.png" alt="ESPN" />
+        <!-- Replicando para rolagem contínua -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" alt="Prime Video" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" />
       </div>
     </div>
+
     <footer>© 2023 Filmes HD Clips</footer>
   </div>
 </body>
