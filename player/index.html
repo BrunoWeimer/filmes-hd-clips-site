@@ -1,119 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Filmes HD Player</title>
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0a0a0a;
-            color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .logo {
-            width: 200px;
-            margin-bottom: 20px;
-        }
-
-        .login-box {
-            background-color: #1a1a1a;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00bfff55;
-            text-align: center;
-        }
-
-        .login-box input {
-            width: 90%;
-            margin: 10px 0;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: #333;
-            color: white;
-        }
-
-        .login-box button {
-            background-color: #00bfff;
-            border: none;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .player-box {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        video {
-            width: 100%;
-            height: auto;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Filmes HD Player - Smarters</title>
+<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .login-box {
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00bfff55;
+    text-align: center;
+  }
+  input {
+    width: 90%;
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+  }
+  button {
+    background: #00bfff;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .player-box {
+    display: none;
+    width: 100%;
+    max-width: 800px;
+  }
+  video {
+    width: 100%;
+    height: auto;
+  }
+</style>
 </head>
 <body>
-    <img class="logo" src="logo.png" alt="Filmes HD Player" />
-    <div class="login-box" id="loginBox">
-        <h2>Filmes HD Player</h2>
-        <input type="text" id="user" placeholder="Usuário" />
-        <input type="password" id="pass" placeholder="Senha" />
-        <button onclick="startPlayer()">Entrar</button>
-    </div>
-    <div class="player-box" id="playerBox">
-        <video
-            id="videoPlayer"
-            class="video-js vjs-default-skin"
-            controls
-            preload="auto"
-        ></video>
-    </div>
 
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-    <script>
-        // Inicializa o player uma única vez
-        var player = videojs('videoPlayer');
+<div class="login-box" id="loginBox">
+  <h2>Filmes HD Player - Smarters</h2>
+  <input type="text" id="user" placeholder="Usuário" />
+  <input type="password" id="pass" placeholder="Senha" />
+  <button onclick="startPlayer()">Entrar</button>
+</div>
 
-        function startPlayer() {
-            var user = document.getElementById('user').value.trim();
-            var pass = document.getElementById('pass').value.trim();
+<div class="player-box" id="playerBox">
+  <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
+  <button style="margin-top: 10px;" onclick="logout()">Sair</button>
+</div>
 
-            if (!user || !pass) {
-                alert('Por favor, preencha usuário e senha');
-                return;
-            }
+<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+<script>
+  var player = videojs('videoPlayer');
 
-            // URL ajustada para tentar o formato HLS correto
-            var url =
-                'http://florentix.com/get.php?username=' +
-                encodeURIComponent(user) +
-                '&password=' +
-                encodeURIComponent(pass) +
-                '&type=m3u_plus&output=hls';
+  function startPlayer() {
+    var user = document.getElementById('user').value.trim();
+    var pass = document.getElementById('pass').value.trim();
 
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('playerBox').style.display = 'block';
+    if (!user || !pass) {
+      alert('Por favor, preencha usuário e senha');
+      return;
+    }
 
-            // Atualiza a fonte do player e tenta reproduzir
-            player.src({ type: 'application/x-mpegURL', src: url });
-            player.play().catch(function (error) {
-                console.error('Erro ao reproduzir o vídeo:', error);
-                alert(
-                    'Não foi possível reproduzir o vídeo. Verifique seu usuário, senha e conexão.'
-                );
-            });
-        }
-    </script>
+    // Monta a URL no formato esperado
+    var streamUrl = 'http://florentix.com/get.php?username=' + encodeURIComponent(user) + 
+                    '&password=' + encodeURIComponent(pass) + 
+                    '&type=m3u_plus&output=mpegts';
+
+    document.getElementById('loginBox').style.display = 'none';
+    document.getElementById('playerBox').style.display = 'block';
+
+    player.src({ type: 'application/vnd.apple.mpegurl', src: streamUrl });
+
+    player.play().catch(function(error) {
+      console.error('Erro ao reproduzir:', error);
+      alert('Erro ao reproduzir o stream. Verifique usuário, senha e conexão.');
+    });
+  }
+
+  function logout() {
+    player.pause();
+    player.src('');
+    document.getElementById('playerBox').style.display = 'none';
+    document.getElementById('loginBox').style.display = 'block';
+    document.getElementById('user').value = '';
+    document.getElementById('pass').value = '';
+  }
+</script>
+
 </body>
 </html>
