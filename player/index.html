@@ -1,202 +1,80 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Filmes HD Player - Menu</title>
-<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0a0a0a;
-    color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  .login-box, .channels-box {
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #00bfff55;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
-  }
-  input, button {
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #333;
-    color: white;
-  }
-  button {
-    background: #00bfff;
-    cursor: pointer;
-  }
-  ul.channel-list {
-    list-style: none;
-    padding: 0;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  ul.channel-list li {
-    padding: 10px;
-    border-bottom: 1px solid #444;
-    cursor: pointer;
-  }
-  ul.channel-list li:hover {
-    background: #005f9e;
-  }
-  .player-box {
-    width: 100%;
-    max-width: 800px;
-    display: none;
-  }
-  video {
-    width: 100%;
-    height: auto;
-  }
-</style>
+    <title>Seu IPTV Player</title>
+    <link href="https://vjs.zencdn.net/7.8.2/video-js.css" rel="stylesheet" />
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        #player-container { width: 100%; margin-bottom: 20px; }
+        .channel-list { display: flex; flex-wrap: wrap; }
+        .channel { padding: 10px; margin: 5px; background: #f0f0f0; cursor: pointer; }
+        .channel:hover { background: #ddd; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Seu IPTV Player</h1>
+        
+        <div id="player-container">
+            <video id="iptv-player" class="video-js vjs-default-skin" controls>
+                <source src="" type="application/x-mpegURL">
+            </video>
+        </div>
+        
+        <h2>Canais</h2>
+        <div class="channel-list" id="channel-list">
+            <!-- Canais serão carregados aqui -->
+        </div>
+    </div>
 
-<div class="login-box" id="loginBox">
-  <h2>Login IPTV</h2>
-  <input type="text" id="user" placeholder="Usuário" />
-  <input type="password" id="pass" placeholder="Senha" />
-  <button id="loginBtn">Carregar Canais</button>
-</div>
-
-<div class="channels-box" id="channelsBox" style="display:none;">
-  <h2>Selecione o canal</h2>
-  <ul class="channel-list" id="channelList"></ul>
-  <button id="logoutBtn">Sair</button>
-</div>
-
-<div class="player-box" id="playerBox">
-  <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
-  <button onclick="closePlayer()" style="margin-top:10px;">Fechar Player</button>
-</div>
-
-<script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-<script>
-  const baseUrl = 'http://florentix.com/get.php';
-  const player = videojs('videoPlayer');
-  let currentUser = '';
-  let currentPass = '';
-
-  document.getElementById('loginBtn').addEventListener('click', () => {
-    const user = document.getElementById('user').value.trim();
-    const pass = document.getElementById('pass').value.trim();
-    if (!user || !pass) {
-      alert('Preencha usuário e senha');
-      return;
-    }
-    currentUser = user;
-    currentPass = pass;
-    loadChannels(user, pass);
-  });
-
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    resetApp();
-  });
-
-  function resetApp() {
-    currentUser = '';
-    currentPass = '';
-    player.pause();
-    player.src('');
-    document.getElementById('channelsBox').style.display = 'none';
-    document.getElementById('playerBox').style.display = 'none';
-    document.getElementById('loginBox').style.display = 'block';
-    document.getElementById('user').value = '';
-    document.getElementById('pass').value = '';
-    document.getElementById('channelList').innerHTML = '';
-  }
-
-  async function loadChannels(user, pass) {
-    const url = `${baseUrl}?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&type=m3u_plus&output=mpegts`;
-
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Erro ao baixar a playlist');
-      const m3uText = await res.text();
-
-      const channels = parseM3U(m3uText);
-      if (channels.length === 0) {
-        alert('Nenhum canal encontrado ou erro no formato da playlist');
-        return;
-      }
-      showChannels(channels);
-
-    } catch (error) {
-      alert('Erro ao carregar canais: ' + error.message);
-      console.error(error);
-    }
-  }
-
-  function parseM3U(m3u) {
-    // Parse simples do arquivo M3U
-    const lines = m3u.split('\n');
-    const channels = [];
-    let currentChannel = null;
-
-    lines.forEach(line => {
-      line = line.trim();
-      if (line.startsWith('#EXTINF:')) {
-        currentChannel = { name: '', url: '' };
-        // Extrai o nome após a última vírgula
-        const nameIndex = line.lastIndexOf(',');
-        currentChannel.name = line.substring(nameIndex + 1).trim();
-      } else if (line && !line.startsWith('#')) {
-        if (currentChannel) {
-          currentChannel.url = line;
-          channels.push(currentChannel);
-          currentChannel = null;
+    <script src="https://vjs.zencdn.net/7.8.2/video.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        // Configuração do player
+        const player = videojs('iptv-player', {
+            autoplay: true,
+            controls: true,
+            responsive: true,
+            fluid: true
+        });
+        
+        // Lista de canais (substitua com sua lista real)
+        const channels = [
+            { name: "Canal 1", url: "http://seuservidor.com/canal1.m3u8" },
+            { name: "Canal 2", url: "http://seuservidor.com/canal2.m3u8" }
+            // Adicione mais canais conforme necessário
+        ];
+        
+        // Carrega a lista de canais
+        function loadChannels() {
+            const channelList = document.getElementById('channel-list');
+            channels.forEach(channel => {
+                const channelElement = document.createElement('div');
+                channelElement.className = 'channel';
+                channelElement.textContent = channel.name;
+                channelElement.onclick = () => playChannel(channel.url);
+                channelList.appendChild(channelElement);
+            });
         }
-      }
-    });
-
-    return channels;
-  }
-
-  function showChannels(channels) {
-    const listEl = document.getElementById('channelList');
-    listEl.innerHTML = '';
-    channels.forEach(ch => {
-      const li = document.createElement('li');
-      li.textContent = ch.name;
-      li.addEventListener('click', () => playChannel(ch.url));
-      listEl.appendChild(li);
-    });
-
-    document.getElementById('loginBox').style.display = 'none';
-    document.getElementById('channelsBox').style.display = 'block';
-    document.getElementById('playerBox').style.display = 'none';
-  }
-
-  function playChannel(url) {
-    player.src({ type: 'application/vnd.apple.mpegurl', src: url });
-    player.play().catch(err => {
-      alert('Erro ao reproduzir o canal: ' + err.message);
-      console.error(err);
-    });
-    document.getElementById('playerBox').style.display = 'block';
-    document.getElementById('channelsBox').style.display = 'none';
-  }
-
-  function closePlayer() {
-    player.pause();
-    player.src('');
-    document.getElementById('playerBox').style.display = 'none';
-    document.getElementById('channelsBox').style.display = 'block';
-  }
-</script>
-
+        
+        // Função para tocar um canal
+        function playChannel(url) {
+            if(Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(player.tech().el());
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    player.play();
+                });
+            } else if (player.canPlayType('application/vnd.apple.mpegurl')) {
+                player.src(url);
+                player.play();
+            }
+        }
+        
+        // Inicializa
+        loadChannels();
+    </script>
 </body>
 </html>
