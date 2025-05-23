@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes HD Player</title>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .login-box {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00bfff55;
+            text-align: center;
+        }
+
+        .login-box input {
+            width: 90%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+        }
+
+        .login-box button {
+            background-color: #00bfff;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .player-box {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img class="logo" src="logo.png" alt="Filmes HD Player">
+    <div class="login-box" id="loginBox">
+        <h2>Filmes HD Player</h2>
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
+        <button onclick="startPlayer()">Entrar</button>
+    </div>
+    <div class="player-box" id="playerBox">
+        <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
+    </div>
+
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script>
+        function startPlayer() {
+            var user = document.getElementById('user').value;
+            var pass = document.getElementById('pass').value;
+            if (!user || !pass) {
+                alert('Por favor, preencha usuário e senha');
+                return;
+            }
+            var url = 'http://florentix.com/get.php?username=' + user + '&password=' + pass + '&type=m3u8&output=ts';
+
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('playerBox').style.display = 'block';
+
+            var player = videojs('videoPlayer');
+            player.src({ type: 'application/x-mpegURL', src: url });
+            player.play();
+        }
+    </script>
+</body>
+</html>
