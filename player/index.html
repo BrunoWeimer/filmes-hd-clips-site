@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Filmes HD Player</title>
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
@@ -65,34 +64,55 @@
     </style>
 </head>
 <body>
-    <img class="logo" src="logo.png" alt="Filmes HD Player">
+    <img class="logo" src="logo.png" alt="Filmes HD Player" />
     <div class="login-box" id="loginBox">
         <h2>Filmes HD Player</h2>
-        <input type="text" id="user" placeholder="Usuário">
-        <input type="password" id="pass" placeholder="Senha">
+        <input type="text" id="user" placeholder="Usuário" />
+        <input type="password" id="pass" placeholder="Senha" />
         <button onclick="startPlayer()">Entrar</button>
     </div>
     <div class="player-box" id="playerBox">
-        <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto"></video>
+        <video
+            id="videoPlayer"
+            class="video-js vjs-default-skin"
+            controls
+            preload="auto"
+        ></video>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
+        // Inicializa o player uma única vez
+        var player = videojs('videoPlayer');
+
         function startPlayer() {
-            var user = document.getElementById('user').value;
-            var pass = document.getElementById('pass').value;
+            var user = document.getElementById('user').value.trim();
+            var pass = document.getElementById('pass').value.trim();
+
             if (!user || !pass) {
                 alert('Por favor, preencha usuário e senha');
                 return;
             }
-            var url = 'http://florentix.com/get.php?username=' + user + '&password=' + pass + '&type=m3u8&output=ts';
+
+            // URL ajustada para tentar o formato HLS correto
+            var url =
+                'http://florentix.com/get.php?username=' +
+                encodeURIComponent(user) +
+                '&password=' +
+                encodeURIComponent(pass) +
+                '&type=m3u_plus&output=hls';
 
             document.getElementById('loginBox').style.display = 'none';
             document.getElementById('playerBox').style.display = 'block';
 
-            var player = videojs('videoPlayer');
+            // Atualiza a fonte do player e tenta reproduzir
             player.src({ type: 'application/x-mpegURL', src: url });
-            player.play();
+            player.play().catch(function (error) {
+                console.error('Erro ao reproduzir o vídeo:', error);
+                alert(
+                    'Não foi possível reproduzir o vídeo. Verifique seu usuário, senha e conexão.'
+                );
+            });
         }
     </script>
 </body>
