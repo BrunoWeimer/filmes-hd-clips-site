@@ -1,73 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Filmes HD Clips | Links</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
-      color: #ffffff;
-      text-align: center;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Links - Filmes HD Clips (Vermelho com Destaque)</title>
+<style>
+  body {
+    margin: 0;
+    background-color: #121212;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
 
+  .container {
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .logo {
+    max-width: 180px;
+    margin: 0 auto 2rem;
+    display: block;
+  }
+
+  h1 {
+    color: #b71c1c;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    user-select: none;
+  }
+
+  .link-btn {
+    background-color: #b71c1c;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 15px 20px;
+    margin: 0.8rem 0;
+    border-radius: 12px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(183, 28, 28, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+  }
+
+  .link-btn:hover,
+  .link-btn:focus {
+    background-color: #7f0000;
+    box-shadow: 0 6px 14px rgba(127, 0, 0, 0.7);
+  }
+
+  .link-btn svg {
+    width: 24px;
+    height: 24px;
+    margin-right: 14px;
+    flex-shrink: 0;
+    fill: #fff;
+  }
+
+  /* Destaque no botão Teste Grátis */
+  .link-btn.teste-gratis {
+    background-color: #fbc02d; /* amarelo vibrante */
+    color: #121212;
+    font-weight: 700;
+    font-size: 1.3rem;
+    box-shadow: 0 6px 12px rgba(251, 192, 45, 0.7);
+    animation: pulse 2.5s infinite ease-in-out;
+  }
+
+  .link-btn.teste-gratis:hover,
+  .link-btn.teste-gratis:focus {
+    background-color: #f9a825;
+    box-shadow: 0 8px 18px rgba(249, 168, 37, 0.8);
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 12px rgba(251, 192, 45, 0.7); }
+    50% { box-shadow: 0 12px 20px rgba(251, 192, 45, 1); }
+  }
+
+  footer {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    color: #666;
+    user-select: none;
+  }
+
+  @media (max-width: 460px) {
     .container {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 40px 20px;
+      max-width: 100%;
     }
 
-    .logo {
-      width: 150px;
-      margin-bottom: 20px;
+    .link-btn {
+      font-size: 1rem;
+      padding: 12px 16px;
     }
 
-    h1 {
-      font-size: 1.8em;
-      margin-bottom: 30px;
-      color: #00ffe1;
+    .link-btn svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
     }
 
-    .link-button {
-      display: block;
-      background-color: #00ffe1;
-      color: #000;
-      text-decoration: none;
-      margin: 15px 0;
-      padding: 15px;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: 0.3s;
+    .link-btn.teste-gratis {
+      font-size: 1.1rem;
+      padding: 14px 18px;
     }
-
-    .link-button:hover {
-      background-color: #00c7b2;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #888;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <div class="container">
-    <img src="https://filmeshdclips.com.br/assets/img/logo-sem-fundo.png" alt="Filmes HD Clips" class="logo">
+    <img src="https://github.com/BrunoWeimer/filmes-hd-clips-site/blob/cd3d2ce31cea7ba64c110508df55a5147d08e01f/images/logo.png?raw=true" alt="Filmes HD Clips Logo" class="logo" loading="lazy" />
+
     <h1>Filmes HD Clips</h1>
 
-    <a href="https://wa.me/5599999999999" class="link-button">Atendimento via WhatsApp</a>
-    <a href="https://filmeshdclips.com.br/" class="link-button">Site Oficial</a>
-    <a href="https://www.instagram.com/filmeshdclips" class="link-button">Instagram</a>
-    <a href="https://t.me/seucanaltelegram" class="link-button">Canal no Telegram</a>
-    <a href="https://seuplayer.com.br" class="link-button">Baixe o App Player</a>
+    <a href="http://www.filmeshdclips.com.br" class="link-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7v13h20V7l-10-5zm0 2.18L18.18 7H5.82L12 4.18zM4 9h16v11H4V9z"/></svg>
+      Acesse o site
+    </a>
 
-    <footer>
-      © 2025 Filmes HD Clips | IPTV Premium 4K
-    </footer>
+    <a href="http://filmeshdclips.com.br/#features" class="link-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+      Por que assinar nosso serviço?
+    </a>
+
+    <a href="http://filmeshdclips.com.br/#pricing" class="link-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 19h12v-2H6v2zm0-8h12v-2H6v2zm0-6v2h12V5H6z"/></svg>
+      Planos
+    </a>
+
+    <a href="http://filmeshdclips.com.br/#faq" class="link-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+      Perguntas Frequentes
+    </a>
+
+    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Gostaria%20de%20suporte." class="link-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5a10.1 10.1 0 0 0-15.56 13.72L3 21l4.02-1.05A10.1 10.1 0 1 0 20.5 3.5zM12 19a7 7 0 1 1 7-7 7.008 7.008 0 0 1-7 7z"/><path d="M15.04 14.08l-1.15-.58a.5.5 0 0 0-.52.07l-1.1 1.1a8 8 0 0 1-1.37-1.37l1.1-1.1a.5.5 0 0 0 .07-.52l-.58-1.15a.5.5 0 0 0-.85-.11L9.29 12a3.4 3.4 0 0 0 5.42 2.08 0.5.5 0 0 0-.1-.11z"/></svg>
+      Suporte
+    </a>
+
+    <a href="https://wa.me/5551986585514?text=Ol%C3%A1!%20Quero%20realizar%20o%20Teste%20Gr%C3%A1tis%20no%20aplicativo%20Filmes%20HD%20Clips." class="link-btn teste-gratis" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      Teste Grátis 4h
+    </a>
+
+    <footer>©️ 2025 Filmes HD Clips</footer>
   </div>
 </body>
 </html>
