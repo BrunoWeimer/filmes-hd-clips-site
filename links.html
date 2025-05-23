@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Links - Filmes HD Clips (Vermelho com Destaque)</title>
 <style>
   body {
     margin: 0;
@@ -65,9 +64,8 @@
     fill: #fff;
   }
 
-  /* Destaque no botão Teste Grátis */
   .link-btn.teste-gratis {
-    background-color: #fbc02d; /* amarelo vibrante */
+    background-color: #fbc02d;
     color: #121212;
     font-weight: 700;
     font-size: 1.3rem;
@@ -84,6 +82,39 @@
   @keyframes pulse {
     0%, 100% { box-shadow: 0 6px 12px rgba(251, 192, 45, 0.7); }
     50% { box-shadow: 0 12px 20px rgba(251, 192, 45, 1); }
+  }
+
+  .streaming-carousel {
+    overflow-x: auto;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: max-content;
+  }
+
+  .carousel-track img {
+    height: 40px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    user-select: none;
+  }
+
+  .carousel-track img:hover {
+    transform: scale(1.1);
+  }
+
+  .streaming-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .streaming-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   footer {
@@ -113,6 +144,10 @@
       font-size: 1.1rem;
       padding: 14px 18px;
     }
+
+    .carousel-track img {
+      height: 32px;
+    }
   }
 </style>
 </head>
@@ -120,7 +155,6 @@
   <div class="container">
     <img src="https://github.com/BrunoWeimer/filmes-hd-clips-site/blob/cd3d2ce31cea7ba64c110508df55a5147d08e01f/images/logo.png?raw=true" alt="Filmes HD Clips Logo" class="logo" loading="lazy" />
 
-    <h1>Filmes HD Clips</h1>
 
     <a href="http://www.filmeshdclips.com.br" class="link-btn" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7v13h20V7l-10-5zm0 2.18L18.18 7H5.82L12 4.18zM4 9h16v11H4V9z"/></svg>
@@ -152,7 +186,19 @@
       Teste Grátis 4h
     </a>
 
-    <footer>©️ 2025 Filmes HD Clips</footer>
+    <!-- Carrossel de ícones de streaming -->
+    <div class="streaming-carousel">
+      <div class="carousel-track">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png" alt="Prime Video" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/HBO_Max_Logo.svg" alt="HBO Max" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Globoplay_2021_logo.svg" alt="Globoplay" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Apple_TV_Plus_Logo.svg" alt="Apple TV+" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Star%2B_logo.svg" alt="Star+" />
+      </div>
+    </div>
+    <footer>© 2023 Filmes HD Clips</footer>
   </div>
 </body>
 </html>
