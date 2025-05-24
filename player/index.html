@@ -3,187 +3,492 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>Player IPTV Premium</title>
   <style>
+    :root {
+      --primary: #ff0000;
+      --background: #0f0f0f;
+      --card-bg: #1a1a1a;
+      --text: #ffffff;
+      --error: #ff3333;
+      --success: #00cc66;
+    }
+    
     body {
       margin: 0;
-      background: #0f0f0f;
-      color: white;
-      font-family: Arial, sans-serif;
+      padding: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .login-box {
-      background: #1a1a1a;
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      flex: 1;
     }
-    .login-box h1 {
+    
+    header {
       text-align: center;
-      color: #ff0000;
+      padding: 20px 0;
+    }
+    
+    .logo {
+      max-width: 200px;
+      margin-bottom: 10px;
+    }
+    
+    .login-container {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .login-title {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    
+    .form-group {
       margin-bottom: 20px;
     }
-    .login-box input {
+    
+    .form-control {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
+      padding: 12px 15px;
       background: #2a2a2a;
-      border: none;
+      border: 1px solid #333;
       border-radius: 5px;
-      color: white;
+      color: var(--text);
+      font-size: 16px;
     }
-    .login-box button {
-      width: 100%;
-      padding: 12px;
-      background: #ff0000;
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: var(--primary);
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 16px;
       font-weight: bold;
+      width: 100%;
+      transition: all 0.3s;
     }
-    .player-section {
-      display: none; /* Só aparece após login */
+    
+    .btn:hover {
+      background: #cc0000;
+      transform: translateY(-2px);
     }
+    
+    .player-container {
+      display: none;
+      margin-top: 30px;
+    }
+    
     #video-player {
       width: 100%;
       height: 500px;
       background: black;
+      border-radius: 5px;
     }
+    
     .channel-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      margin-top: 20px;
+      gap: 15px;
+      margin-top: 25px;
     }
-    .channel-btn {
+    
+    .channel-card {
       background: #252525;
-      color: white;
-      border: none;
-      padding: 10px;
       border-radius: 5px;
+      overflow: hidden;
       cursor: pointer;
-      text-align: left;
+      transition: all 0.3s;
     }
-    .channel-btn:hover {
-      background: #ff3333;
+    
+    .channel-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+    }
+    
+    .channel-thumb {
+      width: 100%;
+      height: 120px;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+    }
+    
+    .channel-name {
+      padding: 10px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .status-message {
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: none;
+    }
+    
+    .error {
+      background: rgba(255, 0, 0, 0.2);
+      border-left: 4px solid var(--error);
+      display: block;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1a1a1a;
+      margin-top: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .channel-list {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      #video-player {
+        height: 300px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Tela de Login -->
-  <div class="login-box" id="login-box">
-    <h1>Acessar Player IPTV</h1>
-    <form onsubmit="handleLogin(event)">
-      <input type="text" id="username" placeholder="Usuário" required>
-      <input type="password" id="password" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
-    </form>
+  <div class="container">
+    <header>
+      <img src="https://via.placeholder.com/200x50?text=LOGO+IPTV" alt="Logo IPTV" class="logo">
+    </header>
+    
+    <div class="login-container" id="login-container">
+      <h2 class="login-title">Acesse sua conta IPTV</h2>
+      
+      <div id="status-message" class="status-message"></div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <input type="text" id="username" class="form-control" placeholder="Usuário" required>
+        </div>
+        
+        <div class="form-group">
+          <input type="password" id="password" class="form-control" placeholder="Senha" required>
+        </div>
+        
+        <button type="submit" class="btn" id="login-btn">
+          <span id="btn-text">Entrar</span>
+          <span id="btn-loader" class="loading" style="display: none;"></span>
+        </button>
+      </form>
+    </div>
+    
+    <div class="player-container" id="player-container">
+      <video id="video-player" controls></video>
+      
+      <div class="channel-list" id="channel-list"></div>
+    </div>
   </div>
+  
+  <footer>
+    <p>© 2023 IPTV Premium - Todos os direitos reservados</p>
+  </footer>
 
-  <!-- Player (aparece após login) -->
-  <div class="player-section" id="player-section">
-    <video id="video-player" controls></video>
-    <div class="channel-list" id="channel-list"></div>
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
-    // ✅ SERVIDOR JÁ CONFIGURADO (florentix.com)
+    // Configurações
     const XTREAM_SERVER = "http://florentix.com";
-
-    // Elementos do DOM
-    const loginBox = document.getElementById('login-box');
-    const playerSection = document.getElementById('player-section');
+    const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+    
+    // Elementos DOM
+    const loginForm = document.getElementById('login-form');
+    const loginContainer = document.getElementById('login-container');
+    const playerContainer = document.getElementById('player-container');
     const videoPlayer = document.getElementById('video-player');
     const channelList = document.getElementById('channel-list');
-
-    // Função de login
-    async function handleLogin(event) {
-      event.preventDefault();
+    const statusMessage = document.getElementById('status-message');
+    const loginBtn = document.getElementById('login-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoader = document.getElementById('btn-loader');
+    
+    // HLS.js instance
+    let hls = null;
+    
+    // Event Listeners
+    loginForm.addEventListener('submit', handleLogin);
+    
+    // Função principal de login
+    async function handleLogin(e) {
+      e.preventDefault();
+      
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
-
+      
+      // Mostra loading
+      btnText.textContent = "Conectando...";
+      btnLoader.style.display = "inline-block";
+      loginBtn.disabled = true;
+      
       try {
-        // Verifica se o login é válido
-        const authUrl = `${XTREAM_SERVER}/player_api.php?username=${username}&password=${password}`;
-        const response = await fetch(authUrl);
-        const data = await response.json();
-
-        if (data.user_info && data.user_info.auth === 1) {
-          loginBox.style.display = 'none';
-          playerSection.style.display = 'block';
-          loadChannels(username, password);
-        } else {
-          alert("Usuário ou senha incorretos!");
-        }
+        // 1. Verifica conexão com internet
+        await testInternetConnection();
+        
+        // 2. Verifica credenciais
+        const userData = await verifyCredentials(username, password);
+        
+        // 3. Carrega lista de canais
+        const channels = await loadChannelList(username, password);
+        
+        // 4. Mostra player
+        showPlayer(channels, username, password);
+        
+        showStatus("Login realizado com sucesso!", "success");
       } catch (error) {
-        alert("Erro ao conectar. Verifique sua internet.");
-        console.error(error);
+        console.error("Erro no login:", error);
+        showStatus(error.message, "error");
+      } finally {
+        // Restaura botão
+        btnText.textContent = "Entrar";
+        btnLoader.style.display = "none";
+        loginBtn.disabled = false;
       }
     }
-
-    // Carrega lista de canais via M3U
-    async function loadChannels(username, password) {
+    
+    // Testa conexão com internet
+    async function testInternetConnection() {
+      try {
+        const response = await fetchWithTimeout("https://www.google.com", {}, 5000);
+        if (!response.ok) throw new Error("Sem conexão com a internet");
+      } catch (error) {
+        throw new Error("Verifique sua conexão com a internet");
+      }
+    }
+    
+    // Verifica credenciais
+    async function verifyCredentials(username, password) {
+      const authUrl = `${XTREAM_SERVER}/player_api.php?username=${username}&password=${password}`;
+      
+      try {
+        const response = await fetchWithCORS(authUrl);
+        const data = await response.json();
+        
+        if (!data.user_info || data.user_info.auth !== 1) {
+          throw new Error("Usuário ou senha incorretos");
+        }
+        
+        return data;
+      } catch (error) {
+        if (error.message.includes("Failed to fetch")) {
+          throw new Error("Servidor não disponível. Tente mais tarde.");
+        }
+        throw error;
+      }
+    }
+    
+    // Carrega lista de canais
+    async function loadChannelList(username, password) {
       const m3uUrl = `${XTREAM_SERVER}/get.php?username=${username}&password=${password}&type=m3u_plus`;
       
       try {
-        const response = await fetch(m3uUrl);
+        const response = await fetchWithCORS(m3uUrl);
         const m3uData = await response.text();
-        const channels = parseM3U(m3uData);
-
-        channelList.innerHTML = ''; // Limpa lista
-
-        channels.forEach(channel => {
-          const btn = document.createElement('button');
-          btn.className = 'channel-btn';
-          btn.textContent = channel.name;
-          btn.onclick = () => playStream(channel.url);
-          channelList.appendChild(btn);
-        });
+        return parseM3U(m3uData);
       } catch (error) {
-        alert("Erro ao carregar canais. Tente novamente.");
-        console.error(error);
+        console.error("Erro ao carregar canais:", error);
+        throw new Error("Erro ao carregar lista de canais");
       }
     }
-
-    // Extrai canais do M3U
+    
+    // Parse M3U
     function parseM3U(data) {
       const lines = data.split('\n');
       const channels = [];
+      let currentChannel = {};
       
       for (let i = 0; i < lines.length; i++) {
-        if (lines[i].startsWith('#EXTINF')) {
-          const name = lines[i].split(',')[1].trim();
-          const url = lines[i + 1].trim();
-          channels.push({ name, url });
+        const line = lines[i].trim();
+        
+        if (line.startsWith('#EXTINF')) {
+          const channelInfo = line.split(',');
+          const params = channelInfo[0].split(' ');
+          
+          currentChannel = {
+            name: channelInfo.slice(1).join(','),
+            logo: params.find(p => p.startsWith('tvg-logo='))?.split('=')[1]?.replace(/"/g, ''),
+            group: params.find(p => p.startsWith('group-title='))?.split('=')[1]?.replace(/"/g, ''),
+            id: params.find(p => p.startsWith('tvg-id='))?.split('=')[1]?.replace(/"/g, '')
+          };
+        } else if (line && !line.startsWith('#') && currentChannel.name) {
+          currentChannel.url = line;
+          channels.push(currentChannel);
+          currentChannel = {};
         }
       }
       
       return channels;
     }
-
-    // Reproduz o stream
+    
+    // Mostra player com canais
+    function showPlayer(channels, username, password) {
+      loginContainer.style.display = "none";
+      playerContainer.style.display = "block";
+      
+      // Render canais
+      channelList.innerHTML = '';
+      
+      channels.forEach(channel => {
+        const channelUrl = channel.url.includes('http') 
+          ? channel.url 
+          : `${XTREAM_SERVER}/live/${username}/${password}/${channel.url.split('/').pop()}`;
+        
+        const channelElement = document.createElement('div');
+        channelElement.className = 'channel-card';
+        channelElement.innerHTML = `
+          <div class="channel-thumb">
+            ${channel.logo 
+              ? `<img src="${channel.logo}" alt="${channel.name}" style="max-width:100%; max-height:100%;">` 
+              : channel.name.substring(0, 2)}
+          </div>
+          <div class="channel-name">${channel.name}</div>
+        `;
+        
+        channelElement.addEventListener('click', () => playStream(channelUrl));
+        channelList.appendChild(channelElement);
+      });
+    }
+    
+    // Reproduz stream
     function playStream(url) {
+      stopCurrentStream();
+      
       if (url.includes('.m3u8')) {
-        // Se for HLS, usa Hls.js (para melhor compatibilidade)
-        if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-          const hls = new Hls();
+        if (Hls.isSupported()) {
+          hls = new Hls();
           hls.loadSource(url);
           hls.attachMedia(videoPlayer);
           hls.on(Hls.Events.MANIFEST_PARSED, () => videoPlayer.play());
+        } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+          // Safari suporta HLS nativamente
+          videoPlayer.src = url;
+          videoPlayer.play();
         } else {
-          alert("Seu navegador não suporta HLS. Use Chrome ou Firefox.");
+          showStatus("Seu navegador não suporta este formato de vídeo", "error");
         }
       } else {
-        // Se for TS ou outro formato, tenta reproduzir diretamente
+        // Outros formatos (TS, MP4, etc)
         videoPlayer.src = url;
-        videoPlayer.play().catch(e => alert("Erro ao reproduzir."));
+        videoPlayer.play().catch(e => {
+          showStatus("Erro ao reproduzir o canal. Tente outro.", "error");
+        });
       }
     }
+    
+    // Para a reprodução atual
+    function stopCurrentStream() {
+      if (hls) {
+        hls.destroy();
+        hls = null;
+      }
+      videoPlayer.pause();
+      videoPlayer.removeAttribute('src');
+      videoPlayer.load();
+    }
+    
+    // Mostra mensagens de status
+    function showStatus(message, type = "error") {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message ${type}`;
+      statusMessage.style.display = "block";
+      
+      if (type === "error") {
+        console.error(message);
+      } else {
+        console.log(message);
+      }
+      
+      // Esconde após 5 segundos
+      if (type !== "loading") {
+        setTimeout(() => {
+          statusMessage.style.display = "none";
+        }, 5000);
+      }
+    }
+    
+    // Fetch com CORS
+    async function fetchWithCORS(url, options = {}) {
+      try {
+        // Tenta direto primeiro
+        const directResponse = await fetchWithTimeout(url, options);
+        if (directResponse.ok) return directResponse;
+        
+        // Se falhar, tenta com proxy CORS
+        const proxyUrl = CORS_PROXY + url;
+        const proxyResponse = await fetchWithTimeout(proxyUrl, {
+          ...options,
+          headers: {
+            ...options.headers,
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        
+        if (!proxyResponse.ok) throw new Error(`HTTP error! status: ${proxyResponse.status}`);
+        return proxyResponse;
+      } catch (error) {
+        throw new Error(`Falha na conexão: ${error.message}`);
+      }
+    }
+    
+    // Fetch com timeout
+    function fetchWithTimeout(url, options = {}, timeout = 8000) {
+      return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Timeout')), timeout)
+        )
+      ]);
+    }
+    
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      // Verifica se há credenciais salvas (opcional)
+      if (localStorage.getItem('iptv_credentials')) {
+        const creds = JSON.parse(localStorage.getItem('iptv_credentials'));
+        document.getElementById('username').value = creds.username;
+        document.getElementById('password').value = creds.password;
+      }
+    });
   </script>
-
-  <!-- Suporte para HLS (opcional, melhora compatibilidade) -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </body>
 </html>
