@@ -1,254 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Florentix IPTV Player</title>
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --dark-color: #1a1a1a;
-            --light-color: #ecf0f1;
-        }
-        
-        body {
-            background-color: var(--dark-color);
-            color: var(--light-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .login-container {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 30px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .player-container {
-            display: none;
-            margin-top: 20px;
-        }
-        
-        #video-player {
-            width: 100%;
-            height: 500px;
-            background-color: #000;
-        }
-        
-        .channel-list {
-            margin-top: 20px;
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        
-        .channel-item {
-            padding: 10px;
-            margin-bottom: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .channel-item:hover {
-            background-color: var(--secondary-color);
-            transform: translateX(5px);
-        }
-        
-        .category-title {
-            color: var(--secondary-color);
-            margin-top: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--secondary-color);
-        }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .logo img {
-            max-width: 150px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player | Filmes HD Clips</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #000000 0%, #0f0f0f 100%);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .logo {
+      margin-bottom: 30px;
+    }
+    .logo img {
+      max-width: 200px;
+      filter: drop-shadow(0 0 10px red);
+    }
+    .form-container {
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      max-width: 400px;
+      width: 90%;
+    }
+    .form-container h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #ff0000;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #2a2a2a;
+      color: white;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff0000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #cc0000;
+    }
+  </style>
 </head>
 <body>
-    <!-- Tela de Login -->
-    <div class="container login-container" id="login-screen">
-        <div class="logo">
-            <h2>Florentix IPTV</h2>
-        </div>
-        <form id="login-form">
-            <div class="mb-3">
-                <label for="username" class="form-label">Usuário</label>
-                <input type="text" class="form-control" id="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
-        </form>
-    </div>
+  <div class="logo">
+    <img src="/logo.png" alt="Logo Filmes HD Clips">
+  </div>
+  <div class="form-container">
+    <h2>Entrar no Player</h2>
+    <form onsubmit="return handleLogin(event)">
+      <input type="text" id="username" placeholder="Usuário" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <input type="text" id="server" value="http://florentix.com" readonly>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 
-    <!-- Player Principal -->
-    <div class="container player-container" id="player-screen">
-        <div class="row">
-            <div class="col-md-8">
-                <video id="video-player" class="video-js vjs-default-skin" controls>
-                    <source src="" type="application/x-mpegURL">
-                </video>
-            </div>
-            <div class="col-md-4">
-                <div class="channel-list" id="channel-list">
-                    <!-- Canais serão carregados aqui -->
-                </div>
-            </div>
-        </div>
-    </div>
+  <script>
+    function handleLogin(event) {
+      event.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      const server = document.getElementById('server').value;
 
-    <!-- Scripts -->
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
-    <script>
-        // Configuração do player
-        const player = videojs('video-player', {
-            autoplay: true,
-            controls: true,
-            responsive: true,
-            fluid: true,
-            playbackRates: [0.5, 1, 1.5, 2]
-        });
-
-        // Variáveis globais
-        let userData = null;
-        let channelsData = [];
-
-        // Evento de login
-        document.getElementById('login-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                // Chamada para sua API de autenticação no florentix.com
-                const response = await axios.post('http://florentix.com/api/auth', {
-                    username: username,
-                    password: password
-                });
-                
-                if (response.data.success) {
-                    userData = response.data.user;
-                    channelsData = response.data.playlist;
-                    
-                    // Esconde login e mostra player
-                    document.getElementById('login-screen').style.display = 'none';
-                    document.getElementById('player-screen').style.display = 'block';
-                    
-                    // Carrega canais
-                    loadChannels();
-                } else {
-                    alert('Login falhou: ' + response.data.message);
-                }
-            } catch (error) {
-                console.error('Erro no login:', error);
-                alert('Erro ao conectar ao servidor');
-            }
-        });
-
-        // Função para carregar canais
-        function loadChannels() {
-            const channelList = document.getElementById('channel-list');
-            channelList.innerHTML = '';
-            
-            // Agrupa canais por categoria
-            const categories = {};
-            channelsData.forEach(channel => {
-                if (!categories[channel.category]) {
-                    categories[channel.category] = [];
-                }
-                categories[channel.category].push(channel);
-            });
-            
-            // Renderiza canais por categoria
-            for (const category in categories) {
-                const categoryElement = document.createElement('div');
-                categoryElement.innerHTML = `<h5 class="category-title">${category}</h5>`;
-                channelList.appendChild(categoryElement);
-                
-                categories[category].forEach(channel => {
-                    const channelElement = document.createElement('div');
-                    channelElement.className = 'channel-item';
-                    channelElement.innerHTML = `
-                        <strong>${channel.name}</strong>
-                        <small class="d-block">${channel.group}</small>
-                    `;
-                    channelElement.addEventListener('click', () => playChannel(channel.url));
-                    channelList.appendChild(channelElement);
-                });
-            }
-        }
-
-        // Função para reproduzir canal
-        function playChannel(url) {
-            if (Hls.isSupported()) {
-                const hls = new Hls();
-                hls.loadSource(url);
-                hls.attachMedia(player.tech().el());
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    player.play();
-                });
-            } else if (player.canPlayType('application/vnd.apple.mpegurl')) {
-                player.src(url);
-                player.play();
-            }
-        }
-
-        // Simulação de dados (remover em produção)
-        function simulateLogin() {
-            userData = {
-                id: 1,
-                username: 'demo',
-                expires: '2023-12-31'
-            };
-            
-            channelsData = [
-                {
-                    name: "Globo HD",
-                    url: "http://exemplo.com/globo.m3u8",
-                    category: "Nacionais",
-                    group: "Aberto"
-                },
-                {
-                    name: "SBT HD",
-                    url: "http://exemplo.com/sbt.m3u8",
-                    category: "Nacionais",
-                    group: "Aberto"
-                },
-                {
-                    name: "HBO",
-                    url: "http://exemplo.com/hbo.m3u8",
-                    category: "Filmes",
-                    group: "Premium"
-                }
-            ];
-            
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('player-screen').style.display = 'block';
-            loadChannels();
-        }
-
-        // Para teste rápido - remover em produção
-        // simulateLogin();
-    </script>
+      // Redireciona para uma URL fictícia do player IPTV
+      const loginUrl = `${server}/player?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
+      window.location.href = loginUrl;
+    }
+  </script>
 </body>
 </html>
