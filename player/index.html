@@ -60,6 +60,11 @@
     button:hover {
       background: #cc0000;
     }
+    .result {
+      margin-top: 20px;
+      color: #0f0;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -68,25 +73,46 @@
   </div>
   <div class="form-container">
     <h2>Entrar no Player</h2>
-    <form onsubmit="return handleLogin(event)">
+    <form id="login-form">
       <input type="text" id="username" placeholder="Usuário" required>
       <input type="password" id="password" placeholder="Senha" required>
-      <input type="text" id="server" value="http://florentix.com" readonly>
       <button type="submit">Entrar</button>
     </form>
+    <div class="result" id="result"></div>
   </div>
 
   <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-      const server = document.getElementById('server').value;
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const result = document.getElementById('result');
 
-      // Redireciona para uma URL fictícia do player IPTV
-      const loginUrl = `${server}/player?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
-      window.location.href = loginUrl;
-    }
+      result.textContent = 'Verificando...';
+
+      try {
+        const res = await fetch('http://florentix.com/player_api.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `username=${username}&password=${password}`
+        });
+
+        const data = await res.json();
+        if (data.user_info && data.user_info.auth === 1) {
+          result.style.color = '#0f0';
+          result.textContent = 'Login realizado com sucesso! Redirecionando...';
+
+          // Redirecionar para o WebPlayer da plataforma
+          window.location.href = `http://florentix.com/webplayer.php?username=${username}&password=${password}`;
+        } else {
+          result.style.color = 'red';
+          result.textContent = 'Usuário ou senha inválidos.';
+        }
+      } catch (error) {
+        result.style.color = 'red';
+        result.textContent = 'Erro ao conectar com o servidor IPTV.';
+      }
+    });
   </script>
 </body>
 </html>
