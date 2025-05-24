@@ -7,8 +7,10 @@
     <style>
         :root {
             --primary: #3498db;
+            --secondary: #2ecc71;
             --dark: #2c3e50;
             --light: #ecf0f1;
+            --danger: #e74c3c;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -48,19 +50,23 @@
             border-radius: 5px;
             padding: 10px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .channel-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .channel-card.active {
+            border: 2px solid var(--primary);
+            background-color: #f0f8ff;
         }
         .channel-logo {
             width: 100%;
             height: 100px;
             object-fit: contain;
         }
-        input, button {
+        input, button, select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -79,6 +85,12 @@
         button:hover {
             background: #2980b9;
         }
+        button.secondary {
+            background: var(--secondary);
+        }
+        button.danger {
+            background: var(--danger);
+        }
         .header {
             background: var(--dark);
             color: white;
@@ -86,43 +98,113 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
         .category-filter {
             margin: 20px 0;
+            display: flex;
+            gap: 10px;
+        }
+        .search-box {
+            margin: 20px 0;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .connection-status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .online {
+            background: var(--secondary);
+        }
+        .offline {
+            background: var(--danger);
+        }
+        .server-info {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
     <div class="login-container" id="loginSection">
-        <h2>Acesse Seu IPTV</h2>
-        <input type="text" id="username" placeholder="Usuário">
-        <input type="password" id="password" placeholder="Senha">
-        <button id="btn-login">Entrar</button>
-        <div id="loginMessage" style="color:red; margin-top:10px;"></div>
+        <h2 style="text-align: center; margin-bottom: 30px;">Acesse Seu IPTV Premium</h2>
+        <input type="text" id="username" placeholder="Usuário" autocomplete="username">
+        <input type="password" id="password" placeholder="Senha" autocomplete="current-password">
+        
+        <div style="margin: 15px 0;">
+            <label for="server">Servidor:</label>
+            <input type="text" id="server" placeholder="meuservidor.xyz" value="meuservidor.xyz">
+        </div>
+        
+        <div style="margin: 15px 0;">
+            <label for="port">Porta:</label>
+            <input type="text" id="port" placeholder="80" value="80">
+        </div>
+        
+        <button id="btn-login">
+            <span id="loginText">Entrar</span>
+            <span id="loginSpinner" class="loading" style="display: none;"></span>
+        </button>
+        
+        <div id="loginMessage" style="margin-top: 15px; padding: 10px; border-radius: 5px;"></div>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <button onclick="testConnection()" class="secondary" style="width: auto;">
+                Testar Conexão com o Servidor
+            </button>
+        </div>
     </div>
 
     <div class="player-container" id="playerSection">
         <div class="header">
-            <h2>WebPlayer Premium</h2>
-            <div>
+            <h2 style="margin: 0;">WebPlayer Premium</h2>
+            <div style="display: flex; align-items: center; gap: 15px;">
                 <span id="userInfo"></span>
-                <button onclick="logout()" style="margin-left:10px;">Sair</button>
+                <span id="connectionStatus" class="connection-status offline">Offline</span>
+                <button onclick="logout()" class="danger" style="width: auto; margin: 0;">Sair</button>
             </div>
+        </div>
+        
+        <div class="server-info" id="serverInfo" style="display: none;">
+            <h3 style="margin-top: 0;">Informações do Servidor</h3>
+            <div id="serverDetails"></div>
         </div>
         
         <div class="video-container">
             <video id="videoPlayer" controls></video>
         </div>
         
+        <div class="search-box">
+            <input type="text" id="channelSearch" placeholder="Pesquisar canal..." oninput="searchChannels()">
+        </div>
+        
         <div class="category-filter">
             <select id="categoryFilter" onchange="filterChannels()">
                 <option value="all">Todos os Canais</option>
-                <!-- Categorias serão carregadas dinamicamente -->
             </select>
+            <button onclick="reloadChannels()" class="secondary" style="width: auto;">Atualizar Lista</button>
         </div>
         
         <div class="channel-list" id="channelList">
-            <!-- Canais serão carregados dinamicamente -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 20px;">
+                <p>Nenhum canal carregado. Faça login primeiro.</p>
+            </div>
         </div>
     </div>
 
@@ -130,93 +212,248 @@
     <script>
         const IPTV_PLAYER = {
             config: {
-                server: "meuservidor.xyz",
-                port: "80",
-                protocol: window.location.protocol === "https:" ? "https://" : "http://"
+                server: "",
+                port: "",
+                protocol: window.location.protocol === "https:" ? "https://" : "http://",
+                currentToken: "",
+                hlsInstance: null,
+                channels: []
             },
             
             init() {
                 this.bindEvents();
                 this.checkSavedCredentials();
+                this.updateConnectionStatus();
             },
             
             bindEvents() {
                 document.getElementById('btn-login').addEventListener('click', () => this.authenticate());
+                document.getElementById('videoPlayer').addEventListener('error', (e) => {
+                    console.error('Erro no player de vídeo:', e);
+                    this.showMessage('Erro ao reproduzir o canal. Tente outro.', 'var(--danger)');
+                });
             },
             
             checkSavedCredentials() {
+                const savedServer = localStorage.getItem('iptv_server');
+                const savedPort = localStorage.getItem('iptv_port');
                 const savedUser = localStorage.getItem('iptv_username');
-                if (savedUser) {
-                    document.getElementById('username').value = savedUser;
-                    document.getElementById('password').focus();
-                }
+                
+                if (savedServer) document.getElementById('server').value = savedServer;
+                if (savedPort) document.getElementById('port').value = savedPort;
+                if (savedUser) document.getElementById('username').value = savedUser;
+                
+                if (savedUser) document.getElementById('password').focus();
             },
             
             async authenticate() {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                this.config.server = document.getElementById('server').value.trim();
+                this.config.port = document.getElementById('port').value.trim();
                 
-                if (!username || !password) {
-                    this.showMessage('Por favor, preencha usuário e senha');
+                if (!username || !password || !this.config.server) {
+                    this.showMessage('Por favor, preencha todos os campos', 'var(--danger)');
                     return;
                 }
                 
-                this.showMessage('Conectando...', 'blue');
+                this.showLoading(true);
+                this.showMessage('Conectando ao servidor...', 'var(--primary)');
                 
                 try {
-                    // Primeiro tenta autenticar via API
-                    const authUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}`;
-                    const response = await fetch(authUrl);
+                    // Salva as configurações
+                    localStorage.setItem('iptv_server', this.config.server);
+                    localStorage.setItem('iptv_port', this.config.port);
+                    localStorage.setItem('iptv_username', username);
                     
-                    if (!response.ok) throw new Error('Credenciais inválidas');
-                    
-                    const data = await response.json();
-                    
-                    if (data.user_info) {
-                        // Salva credenciais (em um sistema real, use métodos mais seguros)
-                        localStorage.setItem('iptv_username', username);
-                        
-                        // Carrega o player
-                        this.loadPlayer(data.user_info, username, password);
-                    } else {
-                        throw new Error('Resposta inválida do servidor');
+                    // Testa a conexão primeiro
+                    const isOnline = await this.testServerConnection();
+                    if (!isOnline) {
+                        throw new Error('Servidor não respondendo');
                     }
+                    
+                    // Tenta autenticar
+                    const authData = await this.tryAuthMethods(username, password);
+                    
+                    if (!authData) {
+                        throw new Error('Nenhum método de autenticação funcionou');
+                    }
+                    
+                    // Autenticação bem-sucedida
+                    localStorage.setItem('iptv_username', username);
+                    this.config.currentToken = btoa(`${username}:${password}`);
+                    
+                    this.loadPlayer(authData.user_info || {username: username, status: 'Active'}, username, password);
+                    this.showMessage('Login bem-sucedido!', 'var(--secondary)');
+                    this.updateConnectionStatus(true);
+                    
                 } catch (error) {
                     console.error('Erro na autenticação:', error);
-                    this.showMessage('Falha no login. Verifique suas credenciais.');
+                    this.showMessage(`Falha no login: ${error.message}`, 'var(--danger)');
+                    this.updateConnectionStatus(false);
+                } finally {
+                    this.showLoading(false);
+                }
+            },
+            
+            async tryAuthMethods(username, password) {
+                const methods = [
+                    // Método 1: Xtream Codes padrão
+                    {
+                        url: `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
+                        type: 'json'
+                    },
+                    // Método 2: Formato alternativo
+                    {
+                        url: `${this.config.protocol}${this.config.server}:${this.config.port}/api.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`,
+                        type: 'json'
+                    },
+                    // Método 3: Autenticação básica
+                    {
+                        url: `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php`,
+                        type: 'json',
+                        headers: {
+                            'Authorization': `Basic ${btoa(username + ":" + password)}`
+                        }
+                    },
+                    // Método 4: Lista M3U direta
+                    {
+                        url: `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&type=m3u_plus`,
+                        type: 'm3u'
+                    }
+                ];
+                
+                for (const method of methods) {
+                    try {
+                        const response = await fetch(method.url, {
+                            headers: method.headers || {}
+                        });
+                        
+                        if (!response.ok) continue;
+                        
+                        if (method.type === 'json') {
+                            const data = await response.json();
+                            if (data.user_info || data.status === 'Active') {
+                                return data;
+                            }
+                        } else if (method.type === 'm3u') {
+                            const data = await response.text();
+                            if (data.includes('#EXTM3U')) {
+                                return { user_info: {username, status: 'Active'}, playlist: data };
+                            }
+                        }
+                    } catch (e) {
+                        console.log(`Método falhou: ${method.url}`, e);
+                        continue;
+                    }
+                }
+                return null;
+            },
+            
+            async testServerConnection() {
+                try {
+                    const testUrl = `${this.config.protocol}${this.config.server}:${this.config.port}`;
+                    const response = await fetch(testUrl, { 
+                        method: 'HEAD',
+                        cache: 'no-store'
+                    });
+                    return response.ok;
+                } catch (error) {
+                    console.error('Falha na conexão com o servidor:', error);
+                    return false;
                 }
             },
             
             loadPlayer(userInfo, username, password) {
-                // Esconde login, mostra player
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('playerSection').style.display = 'block';
                 
-                // Exibe info do usuário
-                document.getElementById('userInfo').textContent = `Bem-vindo, ${userInfo.username} (${userInfo.status})`;
+                document.getElementById('userInfo').textContent = `Bem-vindo, ${userInfo.username}`;
                 
-                // Carrega lista de canais
+                this.loadServerInfo(username, password);
                 this.loadChannelList(username, password);
-                
-                // Carrega categorias
                 this.loadCategories(username, password);
             },
             
-            async loadChannelList(username, password) {
+            async loadServerInfo(username, password) {
                 try {
-                    const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
-                    const response = await fetch(m3uUrl);
-                    const m3uContent = await response.text();
+                    const infoUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_server_info`;
+                    const response = await fetch(infoUrl);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        let html = `
+                            <p><strong>Nome:</strong> ${data.server_name || 'N/A'}</p>
+                            <p><strong>Status:</strong> ${data.status || 'N/A'}</p>
+                            <p><strong>Clientes:</strong> ${data.active_connections || '0'} / ${data.max_connections || 'N/A'}</p>
+                        `;
+                        document.getElementById('serverDetails').innerHTML = html;
+                        document.getElementById('serverInfo').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar info do servidor:', error);
+                }
+            },
+            
+            async loadChannelList(username, password, retry = true) {
+                try {
+                    this.showMessage('Carregando lista de canais...', 'var(--primary)');
+                    
+                    // Tenta obter a lista via API
+                    let m3uContent = '';
+                    const apiUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_live_streams`;
+                    const apiResponse = await fetch(apiUrl);
+                    
+                    if (apiResponse.ok) {
+                        const data = await apiResponse.json();
+                        if (Array.isArray(data)) {
+                            m3uContent = '#EXTM3U\n';
+                            data.forEach(channel => {
+                                m3uContent += `#EXTINF:-1 tvg-id="${channel.id}" tvg-name="${channel.name}" tvg-logo="${channel.logo}" group-title="${channel.category_name}",${channel.name}\n`;
+                                m3uContent += `${channel.stream_url}\n`;
+                            });
+                        }
+                    }
+                    
+                    // Se não obteve pela API, tenta o M3U diretamente
+                    if (!m3uContent) {
+                        const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
+                        const m3uResponse = await fetch(m3uUrl);
+                        m3uContent = await m3uResponse.text();
+                    }
+                    
+                    if (!m3uContent.includes('#EXTM3U')) {
+                        throw new Error('Formato de lista inválido');
+                    }
                     
                     this.parseM3U(m3uContent);
+                    this.showMessage('Lista de canais carregada com sucesso!', 'var(--secondary)');
+                    
                 } catch (error) {
                     console.error('Erro ao carregar canais:', error);
-                    this.showMessage('Erro ao carregar lista de canais', 'red');
+                    this.showMessage('Erro ao carregar lista de canais', 'var(--danger)');
+                    
+                    if (retry) {
+                        // Tenta novamente com autenticação básica
+                        try {
+                            const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
+                            const response = await fetch(m3uUrl, {
+                                headers: {
+                                    'Authorization': `Basic ${this.config.currentToken}`
+                                }
+                            });
+                            const m3uContent = await response.text();
+                            this.parseM3U(m3uContent);
+                        } catch (e) {
+                            console.error('Falha na segunda tentativa:', e);
+                        }
+                    }
                 }
             },
             
             parseM3U(m3uContent) {
                 const lines = m3uContent.split('\n');
+                this.config.channels = [];
                 const channelList = document.getElementById('channelList');
                 channelList.innerHTML = '';
                 
@@ -224,74 +461,120 @@
                 
                 lines.forEach(line => {
                     if (line.startsWith('#EXTINF:')) {
-                        // Extrai informações do canal
-                        const info = line.split(',');
-                        currentChannel.name = info[1];
+                        currentChannel = {
+                            name: line.split(',')[1],
+                            group: '',
+                            logo: ''
+                        };
                         
                         // Extrai atributos (logo, id, etc.)
-                        const attrs = info[0].match(/tvg-([^=]+)="([^"]+)"/g);
+                        const attrs = line.match(/tvg-([^=]+)="([^"]+)"/g);
                         if (attrs) {
                             attrs.forEach(attr => {
                                 const [key, value] = attr.replace(/"/g, '').split('=');
                                 currentChannel[key] = value;
+                                if (key === 'tvg-logo') currentChannel.logo = value;
+                                if (key === 'tvg-group') currentChannel.group = value;
                             });
                         }
                     } else if (line.startsWith('http')) {
                         currentChannel.url = line.trim();
+                        this.config.channels.push(currentChannel);
                         this.createChannelCard(currentChannel);
                         currentChannel = {};
                     }
                 });
+                
+                // Atualiza filtros
+                this.updateCategoryFilter();
             },
             
             createChannelCard(channel) {
                 const channelList = document.getElementById('channelList');
                 const card = document.createElement('div');
                 card.className = 'channel-card';
-                card.onclick = () => this.playChannel(channel.url);
+                card.onclick = () => this.playChannel(channel);
                 
-                const logo = channel['tvg-logo'] ? 
-                    `<img src="${channel['tvg-logo']}" alt="${channel.name}" class="channel-logo">` : 
+                const logo = channel.logo ? 
+                    `<img src="${channel.logo}" alt="${channel.name}" class="channel-logo" onerror="this.src='https://via.placeholder.com/200x100?text=LOGO'">` : 
                     `<div class="channel-logo" style="display:flex;align-items:center;justify-content:center;background:#eee;color:#333;">${channel.name}</div>`;
                 
                 card.innerHTML = `
                     ${logo}
-                    <h3 style="margin:10px 0;text-align:center;">${channel.name}</h3>
+                    <h3 style="margin:10px 0;text-align:center;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${channel.name}</h3>
                 `;
                 
-                if (channel['tvg-group']) {
-                    card.dataset.category = channel['tvg-group'].toLowerCase();
+                if (channel.group) {
+                    card.dataset.category = channel.group.toLowerCase();
+                    card.dataset.name = channel.name.toLowerCase();
                 }
                 
                 channelList.appendChild(card);
             },
             
-            playChannel(url) {
+            playChannel(channel) {
                 const videoPlayer = document.getElementById('videoPlayer');
                 
+                // Remove a classe 'active' de todos os cards
+                document.querySelectorAll('.channel-card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                
+                // Adiciona 'active' no card clicado
+                event.currentTarget.classList.add('active');
+                
                 // Para qualquer reprodução atual
+                if (this.config.hlsInstance) {
+                    this.config.hlsInstance.destroy();
+                }
                 videoPlayer.pause();
                 
+                // Mostra mensagem
+                this.showMessage(`Carregando: ${channel.name}`, 'var(--primary)');
+                
                 // Verifica se é HLS
-                if (url.includes('.m3u8')) {
+                if (channel.url.includes('.m3u8')) {
                     if (Hls.isSupported()) {
-                        const hls = new Hls();
-                        hls.loadSource(url);
-                        hls.attachMedia(videoPlayer);
-                        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                        this.config.hlsInstance = new Hls();
+                        this.config.hlsInstance.loadSource(channel.url);
+                        this.config.hlsInstance.attachMedia(videoPlayer);
+                        this.config.hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
                             videoPlayer.play();
+                            this.showMessage(`Agora tocando: ${channel.name}`, 'var(--secondary)');
+                        });
+                        this.config.hlsInstance.on(Hls.Events.ERROR, (event, data) => {
+                            console.error('HLS Error:', data);
+                            if (data.fatal) {
+                                switch(data.type) {
+                                    case Hls.ErrorTypes.NETWORK_ERROR:
+                                        this.showMessage('Erro de rede. Tentando reconectar...', 'var(--danger)');
+                                        this.config.hlsInstance.startLoad();
+                                        break;
+                                    case Hls.ErrorTypes.MEDIA_ERROR:
+                                        this.showMessage('Erro de mídia. Recuperando...', 'var(--danger)');
+                                        this.config.hlsInstance.recoverMediaError();
+                                        break;
+                                    default:
+                                        this.showMessage('Erro ao reproduzir este canal', 'var(--danger)');
+                                        break;
+                                }
+                            }
                         });
                     } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
                         // Safari suporta HLS nativamente
-                        videoPlayer.src = url;
-                        videoPlayer.play();
+                        videoPlayer.src = channel.url;
+                        videoPlayer.play().catch(e => {
+                            this.showMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
+                        });
                     } else {
-                        this.showMessage('Seu navegador não suporta este formato de vídeo');
+                        this.showMessage('Seu navegador não suporta este formato de vídeo', 'var(--danger)');
                     }
                 } else {
                     // Outros formatos (MP4, TS, etc.)
-                    videoPlayer.src = url;
-                    videoPlayer.play();
+                    videoPlayer.src = channel.url;
+                    videoPlayer.play().catch(e => {
+                        this.showMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
+                    });
                 }
             },
             
@@ -299,49 +582,150 @@
                 try {
                     const apiUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_live_categories`;
                     const response = await fetch(apiUrl);
-                    const categories = await response.json();
                     
-                    const filter = document.getElementById('categoryFilter');
-                    
+                    if (response.ok) {
+                        const categories = await response.json();
+                        this.updateCategoryFilter(categories);
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar categorias:', error);
+                    // Se falhar, extrai categorias dos canais já carregados
+                    this.updateCategoryFilter();
+                }
+            },
+            
+            updateCategoryFilter(categories = null) {
+                const filter = document.getElementById('categoryFilter');
+                
+                // Mantém a seleção atual
+                const currentValue = filter.value;
+                
+                // Limpa as opções, mantendo apenas "Todos"
+                filter.innerHTML = '<option value="all">Todos os Canais</option>';
+                
+                if (categories) {
+                    // Adiciona categorias da API
                     categories.forEach(cat => {
                         const option = document.createElement('option');
                         option.value = cat.category_name.toLowerCase();
                         option.textContent = cat.category_name;
                         filter.appendChild(option);
                     });
-                } catch (error) {
-                    console.error('Erro ao carregar categorias:', error);
+                } else {
+                    // Extrai categorias dos canais
+                    const categorySet = new Set();
+                    this.config.channels.forEach(ch => {
+                        if (ch.group) categorySet.add(ch.group);
+                    });
+                    
+                    categorySet.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.toLowerCase();
+                        option.textContent = cat;
+                        filter.appendChild(option);
+                    });
+                }
+                
+                // Restaura a seleção anterior se ainda existir
+                if (currentValue && Array.from(filter.options).some(o => o.value === currentValue)) {
+                    filter.value = currentValue;
                 }
             },
             
             filterChannels() {
-                const category = document.getElementById('categoryFilter').value;
-                const cards = document.querySelectorAll('.channel-card');
+                const category = document.getElementById('categoryFilter').value.toLowerCase();
+                const searchTerm = document.getElementById('channelSearch').value.toLowerCase();
                 
-                cards.forEach(card => {
-                    if (category === 'all' || card.dataset.category === category) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                document.querySelectorAll('.channel-card').forEach(card => {
+                    const matchesCategory = category === 'all' || card.dataset.category === category;
+                    const matchesSearch = !searchTerm || card.dataset.name.includes(searchTerm);
+                    
+                    card.style.display = matchesCategory && matchesSearch ? 'block' : 'none';
                 });
             },
             
-            showMessage(msg, color = 'red') {
+            searchChannels() {
+                this.filterChannels();
+            },
+            
+            reloadChannels() {
+                const username = localStorage.getItem('iptv_username');
+                const password = prompt("Digite sua senha novamente:");
+                
+                if (password) {
+                    this.loadChannelList(username, password);
+                }
+            },
+            
+            showMessage(msg, color = 'var(--danger)') {
                 const msgEl = document.getElementById('loginMessage');
                 msgEl.textContent = msg;
                 msgEl.style.color = color;
+                msgEl.style.display = msg ? 'block' : 'none';
+            },
+            
+            showLoading(show) {
+                document.getElementById('loginText').style.display = show ? 'none' : 'inline';
+                document.getElementById('loginSpinner').style.display = show ? 'inline-block' : 'none';
+                document.getElementById('btn-login').disabled = show;
+            },
+            
+            updateConnectionStatus(isConnected = false) {
+                const statusEl = document.getElementById('connectionStatus');
+                statusEl.textContent = isConnected ? 'Online' : 'Offline';
+                statusEl.className = `connection-status ${isConnected ? 'online' : 'offline'}`;
             },
             
             logout() {
                 localStorage.removeItem('iptv_username');
                 document.getElementById('loginSection').style.display = 'block';
                 document.getElementById('playerSection').style.display = 'none';
-                document.getElementById('username').value = '';
+                document.getElementById('username').value = localStorage.getItem('iptv_username') || '';
                 document.getElementById('password').value = '';
+                
+                if (this.config.hlsInstance) {
+                    this.config.hlsInstance.destroy();
+                }
+                
                 document.getElementById('videoPlayer').src = '';
+                this.updateConnectionStatus(false);
+                this.showMessage('');
             }
         };
+
+        // Funções globais para chamadas a partir do HTML
+        function testConnection() {
+            IPTV_PLAYER.config.server = document.getElementById('server').value.trim();
+            IPTV_PLAYER.config.port = document.getElementById('port').value.trim();
+            
+            IPTV_PLAYER.showMessage('Testando conexão com o servidor...', 'var(--primary)');
+            
+            IPTV_PLAYER.testServerConnection().then(success => {
+                if (success) {
+                    IPTV_PLAYER.showMessage('Conexão com o servidor bem-sucedida!', 'var(--secondary)');
+                    IPTV_PLAYER.updateConnectionStatus(true);
+                } else {
+                    IPTV_PLAYER.showMessage('Não foi possível conectar ao servidor. Verifique o endereço e porta.', 'var(--danger)');
+                    IPTV_PLAYER.updateConnectionStatus(false);
+                }
+            });
+        }
+        
+        function filterChannels() {
+            IPTV_PLAYER.filterChannels();
+        }
+        
+        function searchChannels() {
+            IPTV_PLAYER.searchChannels();
+        }
+        
+        function reloadChannels() {
+            IPTV_PLAYER.reloadChannels();
+        }
+        
+        function logout() {
+            IPTV_PLAYER.logout();
+        }
         
         // Inicializa quando o DOM estiver pronto
         document.addEventListener('DOMContentLoaded', () => IPTV_PLAYER.init());
