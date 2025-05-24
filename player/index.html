@@ -11,6 +11,7 @@
             --dark: #2c3e50;
             --light: #ecf0f1;
             --danger: #e74c3c;
+            --warning: #f39c12;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -91,6 +92,9 @@
         button.danger {
             background: var(--danger);
         }
+        button.warning {
+            background: var(--warning);
+        }
         .header {
             background: var(--dark);
             color: white;
@@ -139,6 +143,18 @@
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .diagnostic-panel {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .message-box {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -162,11 +178,11 @@
             <span id="loginSpinner" class="loading" style="display: none;"></span>
         </button>
         
-        <div id="loginMessage" style="margin-top: 15px; padding: 10px; border-radius: 5px;"></div>
+        <div id="loginMessage" class="message-box"></div>
         
         <div style="margin-top: 20px; text-align: center;">
-            <button onclick="testConnection()" class="secondary" style="width: auto;">
-                Testar Conexão com o Servidor
+            <button onclick="runConnectionTest()" class="secondary" style="width: auto;">
+                Testar Conexão
             </button>
         </div>
     </div>
@@ -185,6 +201,14 @@
             <h3 style="margin-top: 0;">Informações do Servidor</h3>
             <div id="serverDetails"></div>
         </div>
+        
+        <div class="diagnostic-panel">
+            <h3 style="margin-top: 0;">Diagnóstico de Conexão</h3>
+            <button onclick="runFullDiagnostic()" class="warning" style="width: auto;">Executar Diagnóstico Completo</button>
+            <div id="diagnosticResults" style="margin-top: 10px;"></div>
+        </div>
+        
+        <div id="playerMessage" class="message-box"></div>
         
         <div class="video-container">
             <video id="videoPlayer" controls></video>
@@ -210,6 +234,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
+        // Função fetch com timeout
+        async function fetchWithTimeout(resource, options = {}) {
+            const { timeout = 8000 } = options;
+            
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            
+            try {
+                const response = await fetch(resource, {
+                    ...options,
+                    signal: controller.signal  
+                });
+                
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                throw error;
+            }
+        }
+
         const IPTV_PLAYER = {
             config: {
                 server: "",
@@ -230,7 +275,7 @@
                 document.getElementById('btn-login').addEventListener('click', () => this.authenticate());
                 document.getElementById('videoPlayer').addEventListener('error', (e) => {
                     console.error('Erro no player de vídeo:', e);
-                    this.showMessage('Erro ao reproduzir o canal. Tente outro.', 'var(--danger)');
+                    this.showPlayerMessage('Erro ao reproduzir o canal. Tente outro.', 'var(--danger)');
                 });
             },
             
@@ -291,6 +336,12 @@
                     console.error('Erro na autenticação:', error);
                     this.showMessage(`Falha no login: ${error.message}`, 'var(--danger)');
                     this.updateConnectionStatus(false);
+                    
+                    // Tenta o método alternativo com proxy
+                    if (error.message.includes('Nenhum método')) {
+                        this.showMessage('Tentando método alternativo...', 'var(--warning)');
+                        await this.tryProxyMethod(username, password);
+                    }
                 } finally {
                     this.showLoading(false);
                 }
@@ -325,60 +376,144 @@
                 
                 for (const method of methods) {
                     try {
-                        const response = await fetch(method.url, {
-                            headers: method.headers || {}
+                        console.log(`Tentando método: ${method.url}`);
+                        const response = await fetchWithTimeout(method.url, {
+                            headers: method.headers || {},
+                            timeout: 5000
                         });
                         
-                        if (!response.ok) continue;
+                        if (!response.ok) {
+                            console.log(`Método falhou com status: ${response.status}`);
+                            continue;
+                        }
                         
                         if (method.type === 'json') {
                             const data = await response.json();
                             if (data.user_info || data.status === 'Active') {
+                                console.log('Autenticação bem-sucedida via JSON');
                                 return data;
                             }
                         } else if (method.type === 'm3u') {
                             const data = await response.text();
                             if (data.includes('#EXTM3U')) {
+                                console.log('Autenticação bem-sucedida via M3U');
                                 return { user_info: {username, status: 'Active'}, playlist: data };
                             }
                         }
                     } catch (e) {
-                        console.log(`Método falhou: ${method.url}`, e);
+                        console.log(`Método falhou com erro: ${e.message}`);
                         continue;
                     }
                 }
                 return null;
             },
             
-            async testServerConnection() {
+            async tryProxyMethod(username, password) {
                 try {
-                    const testUrl = `${this.config.protocol}${this.config.server}:${this.config.port}`;
-                    const response = await fetch(testUrl, { 
-                        method: 'HEAD',
-                        cache: 'no-store'
-                    });
-                    return response.ok;
+                    const proxyUrl = `proxy.php?server=${encodeURIComponent(this.config.server)}&port=${encodeURIComponent(this.config.port)}&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+                    
+                    const response = await fetchWithTimeout(proxyUrl, { timeout: 10000 });
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    if (data.user_info) {
+                        this.loadPlayer(data.user_info, username, password);
+                        this.showMessage('Conexão estabelecida via proxy!', 'var(--secondary)');
+                        return true;
+                    }
+                    
+                    if (data.playlist) {
+                        this.loadPlayer({username, status: 'Active'}, username, password);
+                        this.parseM3U(data.playlist);
+                        this.showMessage('Lista carregada via proxy!', 'var(--secondary)');
+                        return true;
+                    }
+                    
+                    throw new Error('Resposta inválida do proxy');
+                    
                 } catch (error) {
-                    console.error('Falha na conexão com o servidor:', error);
+                    console.error('Falha no proxy:', error);
+                    this.showMessage(`Proxy também falhou: ${error.message}`, 'var(--danger)');
                     return false;
                 }
             },
             
-            loadPlayer(userInfo, username, password) {
+            async testServerConnection() {
+                this.updateConnectionStatus(false);
+                this.showMessage('Testando conexão com o servidor...', 'var(--primary)');
+                
+                try {
+                    const portsToTest = [
+                        this.config.port,
+                        80,
+                        8080,
+                        8000,
+                        25463,
+                        2095
+                    ].filter(p => p); // Remove portas vazias
+
+                    const uniquePorts = [...new Set(portsToTest)]; // Remove duplicatas
+                    
+                    let workingPort = null;
+                    
+                    for (const port of uniquePorts) {
+                        try {
+                            const testUrl = `${this.config.protocol}${this.config.server}:${port}`;
+                            console.log(`Testando conexão em: ${testUrl}`);
+                            
+                            const response = await fetchWithTimeout(testUrl, { 
+                                method: 'HEAD',
+                                timeout: 5000
+                            });
+                            
+                            if (response.ok) {
+                                workingPort = port;
+                                break;
+                            }
+                        } catch (e) {
+                            console.log(`Porta ${port} falhou: ${e.message}`);
+                            continue;
+                        }
+                    }
+
+                    if (!workingPort) {
+                        throw new Error('Nenhuma porta respondeu');
+                    }
+
+                    this.config.port = workingPort;
+                    document.getElementById('port').value = workingPort;
+                    localStorage.setItem('iptv_port', workingPort);
+                    
+                    this.showMessage(`Conexão estabelecida na porta ${workingPort}`, 'var(--secondary)');
+                    this.updateConnectionStatus(true);
+                    return true;
+                    
+                } catch (error) {
+                    console.error('Falha na conexão:', error);
+                    this.showMessage(`Servidor não respondendo: ${error.message}`, 'var(--danger)');
+                    this.updateConnectionStatus(false);
+                    return false;
+                }
+            },
+            
+            async loadPlayer(userInfo, username, password) {
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('playerSection').style.display = 'block';
                 
                 document.getElementById('userInfo').textContent = `Bem-vindo, ${userInfo.username}`;
                 
-                this.loadServerInfo(username, password);
-                this.loadChannelList(username, password);
-                this.loadCategories(username, password);
+                await this.loadServerInfo(username, password);
+                await this.loadChannelList(username, password);
+                await this.loadCategories(username, password);
             },
             
             async loadServerInfo(username, password) {
                 try {
                     const infoUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_server_info`;
-                    const response = await fetch(infoUrl);
+                    const response = await fetchWithTimeout(infoUrl, { timeout: 5000 });
                     
                     if (response.ok) {
                         const data = await response.json();
@@ -397,12 +532,12 @@
             
             async loadChannelList(username, password, retry = true) {
                 try {
-                    this.showMessage('Carregando lista de canais...', 'var(--primary)');
+                    this.showPlayerMessage('Carregando lista de canais...', 'var(--primary)');
                     
                     // Tenta obter a lista via API
                     let m3uContent = '';
                     const apiUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_live_streams`;
-                    const apiResponse = await fetch(apiUrl);
+                    const apiResponse = await fetchWithTimeout(apiUrl, { timeout: 7000 });
                     
                     if (apiResponse.ok) {
                         const data = await apiResponse.json();
@@ -418,7 +553,7 @@
                     // Se não obteve pela API, tenta o M3U diretamente
                     if (!m3uContent) {
                         const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
-                        const m3uResponse = await fetch(m3uUrl);
+                        const m3uResponse = await fetchWithTimeout(m3uUrl, { timeout: 10000 });
                         m3uContent = await m3uResponse.text();
                     }
                     
@@ -427,20 +562,21 @@
                     }
                     
                     this.parseM3U(m3uContent);
-                    this.showMessage('Lista de canais carregada com sucesso!', 'var(--secondary)');
+                    this.showPlayerMessage('Lista de canais carregada com sucesso!', 'var(--secondary)');
                     
                 } catch (error) {
                     console.error('Erro ao carregar canais:', error);
-                    this.showMessage('Erro ao carregar lista de canais', 'var(--danger)');
+                    this.showPlayerMessage('Erro ao carregar lista de canais', 'var(--danger)');
                     
                     if (retry) {
                         // Tenta novamente com autenticação básica
                         try {
                             const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
-                            const response = await fetch(m3uUrl, {
+                            const response = await fetchWithTimeout(m3uUrl, {
                                 headers: {
                                     'Authorization': `Basic ${this.config.currentToken}`
-                                }
+                                },
+                                timeout: 10000
                             });
                             const m3uContent = await response.text();
                             this.parseM3U(m3uContent);
@@ -467,7 +603,6 @@
                             logo: ''
                         };
                         
-                        // Extrai atributos (logo, id, etc.)
                         const attrs = line.match(/tvg-([^=]+)="([^"]+)"/g);
                         if (attrs) {
                             attrs.forEach(attr => {
@@ -485,7 +620,6 @@
                     }
                 });
                 
-                // Atualiza filtros
                 this.updateCategoryFilter();
             },
             
@@ -515,24 +649,19 @@
             playChannel(channel) {
                 const videoPlayer = document.getElementById('videoPlayer');
                 
-                // Remove a classe 'active' de todos os cards
                 document.querySelectorAll('.channel-card').forEach(c => {
                     c.classList.remove('active');
                 });
                 
-                // Adiciona 'active' no card clicado
                 event.currentTarget.classList.add('active');
                 
-                // Para qualquer reprodução atual
                 if (this.config.hlsInstance) {
                     this.config.hlsInstance.destroy();
                 }
                 videoPlayer.pause();
                 
-                // Mostra mensagem
-                this.showMessage(`Carregando: ${channel.name}`, 'var(--primary)');
+                this.showPlayerMessage(`Carregando: ${channel.name}`, 'var(--primary)');
                 
-                // Verifica se é HLS
                 if (channel.url.includes('.m3u8')) {
                     if (Hls.isSupported()) {
                         this.config.hlsInstance = new Hls();
@@ -540,40 +669,38 @@
                         this.config.hlsInstance.attachMedia(videoPlayer);
                         this.config.hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
                             videoPlayer.play();
-                            this.showMessage(`Agora tocando: ${channel.name}`, 'var(--secondary)');
+                            this.showPlayerMessage(`Agora tocando: ${channel.name}`, 'var(--secondary)');
                         });
                         this.config.hlsInstance.on(Hls.Events.ERROR, (event, data) => {
                             console.error('HLS Error:', data);
                             if (data.fatal) {
                                 switch(data.type) {
                                     case Hls.ErrorTypes.NETWORK_ERROR:
-                                        this.showMessage('Erro de rede. Tentando reconectar...', 'var(--danger)');
+                                        this.showPlayerMessage('Erro de rede. Tentando reconectar...', 'var(--danger)');
                                         this.config.hlsInstance.startLoad();
                                         break;
                                     case Hls.ErrorTypes.MEDIA_ERROR:
-                                        this.showMessage('Erro de mídia. Recuperando...', 'var(--danger)');
+                                        this.showPlayerMessage('Erro de mídia. Recuperando...', 'var(--danger)');
                                         this.config.hlsInstance.recoverMediaError();
                                         break;
                                     default:
-                                        this.showMessage('Erro ao reproduzir este canal', 'var(--danger)');
+                                        this.showPlayerMessage('Erro ao reproduzir este canal', 'var(--danger)');
                                         break;
                                 }
                             }
                         });
                     } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
-                        // Safari suporta HLS nativamente
                         videoPlayer.src = channel.url;
                         videoPlayer.play().catch(e => {
-                            this.showMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
+                            this.showPlayerMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
                         });
                     } else {
-                        this.showMessage('Seu navegador não suporta este formato de vídeo', 'var(--danger)');
+                        this.showPlayerMessage('Seu navegador não suporta este formato de vídeo', 'var(--danger)');
                     }
                 } else {
-                    // Outros formatos (MP4, TS, etc.)
                     videoPlayer.src = channel.url;
                     videoPlayer.play().catch(e => {
-                        this.showMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
+                        this.showPlayerMessage('Erro ao reproduzir: clique para tentar novamente', 'var(--danger)');
                     });
                 }
             },
@@ -581,7 +708,7 @@
             async loadCategories(username, password) {
                 try {
                     const apiUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}&action=get_live_categories`;
-                    const response = await fetch(apiUrl);
+                    const response = await fetchWithTimeout(apiUrl, { timeout: 5000 });
                     
                     if (response.ok) {
                         const categories = await response.json();
@@ -589,22 +716,17 @@
                     }
                 } catch (error) {
                     console.error('Erro ao carregar categorias:', error);
-                    // Se falhar, extrai categorias dos canais já carregados
                     this.updateCategoryFilter();
                 }
             },
             
             updateCategoryFilter(categories = null) {
                 const filter = document.getElementById('categoryFilter');
-                
-                // Mantém a seleção atual
                 const currentValue = filter.value;
                 
-                // Limpa as opções, mantendo apenas "Todos"
                 filter.innerHTML = '<option value="all">Todos os Canais</option>';
                 
                 if (categories) {
-                    // Adiciona categorias da API
                     categories.forEach(cat => {
                         const option = document.createElement('option');
                         option.value = cat.category_name.toLowerCase();
@@ -612,7 +734,6 @@
                         filter.appendChild(option);
                     });
                 } else {
-                    // Extrai categorias dos canais
                     const categorySet = new Set();
                     this.config.channels.forEach(ch => {
                         if (ch.group) categorySet.add(ch.group);
@@ -626,7 +747,6 @@
                     });
                 }
                 
-                // Restaura a seleção anterior se ainda existir
                 if (currentValue && Array.from(filter.options).some(o => o.value === currentValue)) {
                     filter.value = currentValue;
                 }
@@ -657,8 +777,96 @@
                 }
             },
             
+            async runFullDiagnostic() {
+                const resultsEl = document.getElementById('diagnosticResults');
+                resultsEl.innerHTML = '<p>Executando testes...</p>';
+                
+                const tests = [
+                    { name: 'Conexão básica com o servidor', test: this.testServerConnection },
+                    { name: 'Acesso à API principal', test: this.testAPIAccess },
+                    { name: 'Download da lista M3U', test: this.testM3UDownload }
+                ];
+                
+                let allTestsPassed = true;
+                let resultsHTML = '';
+                
+                for (const test of tests) {
+                    try {
+                        resultsHTML += `<p><strong>${test.name}:</strong> `;
+                        const result = await test.test.call(this);
+                        
+                        if (result) {
+                            resultsHTML += '<span style="color:green">✓ Sucesso</span>';
+                        } else {
+                            resultsHTML += '<span style="color:red">✕ Falhou</span>';
+                            allTestsPassed = false;
+                        }
+                        
+                        resultsHTML += '</p>';
+                    } catch (e) {
+                        resultsHTML += `<p><strong>${test.name}:</strong> <span style="color:red">✕ Erro: ${e.message}</span></p>`;
+                        allTestsPassed = false;
+                    }
+                    
+                    resultsEl.innerHTML = resultsHTML;
+                }
+                
+                if (allTestsPassed) {
+                    resultsHTML += '<p style="color:green;font-weight:bold;">✓ Todos os testes passaram!</p>';
+                } else {
+                    resultsHTML += '<p style="color:red;font-weight:bold;">✕ Alguns testes falharam. Verifique as configurações.</p>';
+                }
+                
+                resultsEl.innerHTML = resultsHTML;
+            },
+            
+            async testAPIAccess() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                if (!username || !password) {
+                    throw new Error('Credenciais não fornecidas');
+                }
+                
+                const apiUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/player_api.php?username=${username}&password=${password}`;
+                const response = await fetchWithTimeout(apiUrl, { timeout: 5000 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                return !!data.user_info;
+            },
+            
+            async testM3UDownload() {
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                
+                if (!username || !password) {
+                    throw new Error('Credenciais não fornecidas');
+                }
+                
+                const m3uUrl = `${this.config.protocol}${this.config.server}:${this.config.port}/get.php?username=${username}&password=${password}&type=m3u_plus`;
+                const response = await fetchWithTimeout(m3uUrl, { timeout: 8000 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.text();
+                return data.includes('#EXTM3U');
+            },
+            
             showMessage(msg, color = 'var(--danger)') {
                 const msgEl = document.getElementById('loginMessage');
+                msgEl.textContent = msg;
+                msgEl.style.color = color;
+                msgEl.style.display = msg ? 'block' : 'none';
+            },
+            
+            showPlayerMessage(msg, color = 'var(--danger)') {
+                const msgEl = document.getElementById('playerMessage');
                 msgEl.textContent = msg;
                 msgEl.style.color = color;
                 msgEl.style.display = msg ? 'block' : 'none';
@@ -690,25 +898,19 @@
                 document.getElementById('videoPlayer').src = '';
                 this.updateConnectionStatus(false);
                 this.showMessage('');
+                this.showPlayerMessage('');
             }
         };
 
         // Funções globais para chamadas a partir do HTML
-        function testConnection() {
+        function runConnectionTest() {
             IPTV_PLAYER.config.server = document.getElementById('server').value.trim();
             IPTV_PLAYER.config.port = document.getElementById('port').value.trim();
-            
-            IPTV_PLAYER.showMessage('Testando conexão com o servidor...', 'var(--primary)');
-            
-            IPTV_PLAYER.testServerConnection().then(success => {
-                if (success) {
-                    IPTV_PLAYER.showMessage('Conexão com o servidor bem-sucedida!', 'var(--secondary)');
-                    IPTV_PLAYER.updateConnectionStatus(true);
-                } else {
-                    IPTV_PLAYER.showMessage('Não foi possível conectar ao servidor. Verifique o endereço e porta.', 'var(--danger)');
-                    IPTV_PLAYER.updateConnectionStatus(false);
-                }
-            });
+            IPTV_PLAYER.testServerConnection();
+        }
+        
+        function runFullDiagnostic() {
+            IPTV_PLAYER.runFullDiagnostic();
         }
         
         function filterChannels() {
